@@ -8,13 +8,20 @@ const passwordHash = await bcryptjs.hash("Welcome123", salt);
 
 const userSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
-    username: { type: String, required: true },
+    name: { type: String, required: [true, "Name is required."] },
+    username: {
+      type: String,
+      lowercase: true,
+      required: [true, "Email is required."],
+      index: {
+        unique: true,
+      },
+    }, 
     password: {
       type: String,
       default: passwordHash,
     },
-    department: { type: String, required: true },
+    department: { type: String, required: [true, "Department is required."] },
     resetToken: String,
     expireToken: Date,
   },

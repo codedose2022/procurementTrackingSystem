@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import ServiceRequests from "../models/serviceRequestSchema.js";
 import Users from "../models/userSchema.js";
 import constants from "../constants/constants.js";
-import authStatusConstants from "../constants/authStatusCode.js";
+import responseStatusConstants from "../constants/responseStatusCode.js";
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ export const getServiceRequests = async (req, res) => {
     else{
       serviceRequestsList = await ServiceRequests.find().sort({ updatedAt: -1 });
     }
-    responseData.status = authStatusConstants.SUCCESS;
+    responseData.status = responseStatusConstants.SUCCESS;
     return res.status(200).send(results);
   } catch (error) {
     res.status(404).json({ message: error.message });
