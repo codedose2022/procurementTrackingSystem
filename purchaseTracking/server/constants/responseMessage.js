@@ -4,10 +4,11 @@ const responseMessageConstants = {
   LOGIN_SUCCESS: 'Logged in successfully',
   PASSWORD_UNMATCHED : 'new password entered does not match with the confirm password',
   PASSWORD_UPDATED: 'Password has been updated successfully',
+  RESET_LINK:'Password reset link sent successfully. Please check your email.',
+  INVALID_LINK:'Password reset link is either invalid or expired.',
 
-  USER_CREATED: "User Created Successfully",
-  USER_DELETED: "User Deleted Successfully",
-  
- 
+  USER_CREATED: "User created successfully",
+  USER_DELETED: "User deleted successfully",
+   
 }
 export default responseMessageConstants;

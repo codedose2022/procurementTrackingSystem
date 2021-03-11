@@ -25,7 +25,4 @@ export const getServiceRequests = async (req, res) => {
   }
 };
 
-
-
-
 export default router;

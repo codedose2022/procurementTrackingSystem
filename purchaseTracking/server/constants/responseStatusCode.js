@@ -1,8 +1,9 @@
 const responseStatusConstants = {
+  FAILURE: "19",
+  SUCCESS: "20",
   INVALID_EMAIL: "21",
   INVALID_PASSWORD: "22",
-  SUCCESS: "20",
-  FAILURE : '19',
   PASSWORD_UNMATCHED: "23",
+  VALIDATION_ERROR: "24",
 };
 export default responseStatusConstants;
