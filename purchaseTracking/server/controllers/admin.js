@@ -19,7 +19,7 @@ export const getUsers = async (req, res) => {
   const responseMessages = {};
   try {
     const usersList = await users
-      .find({}, { password: 0 })
+      .find()
       .sort({ createdAt: -1 });
 
     responseMessages.users = usersList;
@@ -38,7 +38,7 @@ export const createUser = async (req, res) => {
     try {
       await user.save();
       const usersList = await users
-        .find({}, { password: 0 })
+        .find()
         .sort({ createdAt: -1 });
 
       responseMessages.message = responseMessageConstants.USER_CREATED;
@@ -60,7 +60,7 @@ export const deleteUser = async (req, res) => {
   try {
     await users.findByIdAndRemove(req.body._id);
     const usersList = await users
-      .find({}, { password: 0 })
+      .find()
       .sort({ createdAt: -1 });
 
     responseMessages.message = responseMessageConstants.USER_DELETED;

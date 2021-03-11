@@ -16,7 +16,7 @@ export const login = async (req, res) => {
   const { password } = req.body;
   const responseData = {};
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.body.username }).select("+password");
     if (!user) {
       responseData.message = responseMessageConstants.INVALID_EMAIL;
       responseData.status = responseStatusConstants.INVALID_EMAIL;
@@ -48,7 +48,7 @@ export const changePassword = async (req, res) => {
   let passwordHash = "";
   const responseData = {};
   try {
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username }).select("+password");
     const isMatch = await bcryptjs.compare(password, user.password);
     if (!isMatch) {
       responseData.message = responseMessageConstants.INVALID_PASSWORD;

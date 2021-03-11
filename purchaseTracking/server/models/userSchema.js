@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
+      select:false,
       default: passwordHash,
     },
     department: { type: String, required: [true, "Department is required."] },
