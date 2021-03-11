@@ -9,6 +9,9 @@ const responseMessageConstants = {
 
   USER_CREATED: "User created successfully",
   USER_DELETED: "User deleted successfully",
+  
+  SERVICE_REQUEST_CREATED : 'Request created successfully.',
+  INVALID_ID : 'Unable to update as the id is invalid.',
    
 }
 export default responseMessageConstants;

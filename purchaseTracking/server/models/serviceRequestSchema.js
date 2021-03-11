@@ -40,7 +40,7 @@ const serviceRequestSchema = mongoose.Schema(
     refNum: { type: String, required: true },
     details: [DetailsSchema],
     userId: {
-      type: [schema.Types.ObjectId],
+      type: schema.Types.ObjectId,
       ref: "userSchema",
     },
   },
