@@ -11,7 +11,9 @@ const responseMessageConstants = {
   USER_DELETED: "User deleted successfully",
   
   SERVICE_REQUEST_CREATED : 'Request created successfully.',
+  SERVICE_REQUEST_UPDATED : 'Request updated successfully.',
+  COMMENTS_ADDED_SUCCESS : 'Your comments have been added successfully.'.includes,
   INVALID_ID : 'Unable to update as the id is invalid.',
    
 }
-export default responseMessageConstants;
+export default responseMessageConstants; 

@@ -6,6 +6,7 @@ import constants from "../constants/constants.js";
 import responseMessageConstants from "../constants/responseMessage.js";
 import responseStatusConstants from "../constants/responseStatusCode.js";
 import { getRefNum } from "../helper/util.js";
+import _ from "lodash";
 
 const router = express.Router();
 
@@ -76,36 +77,44 @@ export const updateServiceRequests = async (req, res) => {
   // serviceRequestId, detailsId, property to change.
   let responseData = {};
   const reqKey = Object.keys(req.body)[0];
-  const value = JSON.stringify(Object.values(req.body)[0]);
+  const key = `details.$.${reqKey}`;
+  const value = Object.values(req.body)[0];
   const serviceReqId = req.header("serviceRequestId");
   const detailsId = req.header("detailsId");
   try {
-    const serviceRequest = await ServiceRequests.findOne({
-      _id:serviceReqId,
-});
-    const detailList = serviceRequest.details;
-    detailList.map(async(detail, index) => {
-      if(detail._id == detailsId){
-       let path = JSON.stringify(`details.${index}.${reqKey}`);
-    //  let path = JSON.stringify(`details.${index}`);
-      const z = `{${reqKey} : ${value} }`;
-      console.log(z)
-      console.log(path)
-        try {
-          await ServiceRequests.updateOne(
-            {_id:serviceReqId},
-            {
-              $set: {
-                path: {status : "bad" }
-        
-              },
-            }
-            
-          )
-        } catch (error) {
+    const updates = {
+      [key]: value,
+    };
+    if (["comments", "reply"].includes(reqKey)) {
+      ServiceRequests.findOneAndUpdate(
+        { _id: serviceReqId, "details._id": detailsId },
+        {
+          $push: updates,
         }
-      }
-    });
+      ).exec((err, successres) => {
+        if (successres) {
+          responseData.message =
+            responseMessageConstants.COMMENTS_ADDED_SUCCESS;
+          responseData.status = responseStatusConstants.SUCCESS;
+        }
+      });
+    } else {
+      ServiceRequests.findOneAndUpdate(
+        { _id: serviceReqId, "details._id": detailsId },
+        {
+          $set: updates,
+        }
+      ).exec((err, successres) => {
+        if (successres) {
+          responseData.message =
+            responseMessageConstants.SERVICE_REQUEST_UPDATED;
+          responseData.status = responseStatusConstants.SUCCESS;
+        }
+      });
+    }
+    const serviceRequestsList = await ServiceRequests.find();
+    responseData.serviceRequestsList = serviceRequestsList;
+    return res.status(200).json(responseData);
   } catch (error) {
     responseData.status = responseStatusConstants.FAILURE;
     responseData.message = responseMessageConstants.INVALID_ID;
