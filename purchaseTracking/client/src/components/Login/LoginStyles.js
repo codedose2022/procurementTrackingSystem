@@ -49,4 +49,7 @@ export default makeStyles((theme) => ({
   Link: {
     cursor: "pointer",
   },
+  helperTextError: {
+    color: "#d50000",
+  }
 }));

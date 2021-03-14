@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Typography,
-  createMuiTheme,
-  ThemeProvider,
-  IconButton,
+  Button,Card, CardContent,
+  Grid, TextField, Typography, createMuiTheme,ThemeProvider,IconButton,
   Link,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import logo from "../../images/mersat-logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import useStyles from "./LoginStyles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { validateField } from "../../Helpers/validationHelper";
+import {login} from '../../Actions/AuthenticationActions';
+import { Redirect } from 'react-router-dom';
 
 const theme = createMuiTheme({
   palette: {
@@ -29,15 +28,32 @@ const theme = createMuiTheme({
 
 const Login = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [forgotPassword, setForgotPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+  const [serviceErrors, setLoginServiceErrors] = useState("");
+  const [touched, setTouched] = useState(false);
   const handleForgotPassword = () => {
     setForgotPassword(!forgotPassword);
   };
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTouched(true);
+    if(!forgotPassword){
+      if(validateField("password", loginData.password) === '' && validateField("username", loginData.username) === ''){
+        dispatch(login(loginData, setLoginServiceErrors));
+      
+      }
+    }
   };
 
   return (
@@ -47,35 +63,66 @@ const Login = () => {
           <Card className={classes.customCard} elevation={5}>
             <CardContent>
               <div className={`${classes.logo} ${classes.loginCardHeader}`}>
-                <img src={logo} alt="company logo" />
-                <Typography variant="h5">
+                <img src={logo} alt='company logo' />
+                <Typography variant='h5'>
                   {forgotPassword ? "Reset password" : "Login"}
                 </Typography>
               </div>
-              <form className={classes.LoginForm} autoComplete="off">
+              <form
+                className={classes.LoginForm}
+                autoComplete='off'
+                onSubmit={handleSubmit}
+              > 
+              {!forgotPassword && serviceErrors && <Alert severity="error"> {serviceErrors} </Alert>}
                 {!forgotPassword && (
                   <>
                     <TextField
-                      id="username"
-                      placeholder="Enter your username"
-                      name="username"
-                      size="small"
-                      label="Username"
+                      id='username'
+                      placeholder='Enter your username'
+                      name='username'
+                      size='small'
+                      label='Username'
+                      FormHelperTextProps={{
+                        className: classes.helperTextError,
+                      }}
                       fullWidth
-                      type="text"
+                      type='text'
+                      value={loginData.username}
+                      helperText={
+                        touched && validateField("username", loginData.username)
+                      }
+                      onChange={(e) =>
+                        setLoginData({
+                          ...loginData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
                     />
                     <div style={{ position: "relative" }}>
                       <TextField
-                        id="password"
-                        placeholder="Enter your password"
-                        name="password"
-                        size="small"
-                        label="Password"
+                        id='password'
+                        placeholder='Enter your password'
+                        name='password'
+                        size='small'
+                        label='Password'
+                        FormHelperTextProps={{
+                          className: classes.helperTextError,
+                        }}
                         fullWidth
+                        value={loginData.password}
+                        helperText={
+                          touched && validateField("password", loginData.password)
+                        }
+                        onChange={(e) =>
+                          setLoginData({
+                            ...loginData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
                         type={showPassword ? "text" : "password"}
                       />
                       <IconButton
-                        size="small"
+                        size='small'
                         className={classes.absoluteIcon}
                         onClick={handleShowPassword}
                       >
@@ -87,21 +134,35 @@ const Login = () => {
                 {forgotPassword && (
                   <>
                     <TextField
-                      id="email"
-                      placeholder="Enter your email"
-                      name="email"
-                      size="small"
-                      label="Email"
+                      id='email'
+                      placeholder='Enter your email'
+                      name='username'
+                      size='small'
+                      label='Email'
+                      FormHelperTextProps={{
+                        className: classes.helperTextError,
+                      }}
                       fullWidth
-                      type="text"
+                      type='text'
+                      helperText={
+                        touched &&  validateField("username", loginData.username)
+                      }
+                      value={loginData.username}
+                      onChange={(e) =>
+                        setLoginData({
+                          ...loginData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
                     />
                   </>
                 )}
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   fullWidth
                   className={classes.customBtn}
+                  type='submit'
                 >
                   {forgotPassword ? "Get reset link" : "Login"}
                 </Button>

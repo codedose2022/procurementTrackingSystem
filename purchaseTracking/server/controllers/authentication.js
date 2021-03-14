@@ -170,4 +170,21 @@ export const resetPassword = async (req, res) => {
     return res.status(404).json(responseData);
   }
 };
+
+export const isTokenValid = async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) return res.json(false);
+
+    const user = await employeeDetails.findById(verified.id);
+    if (!user) return res.json(false);
+
+    return res.json(true);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 export default router;
