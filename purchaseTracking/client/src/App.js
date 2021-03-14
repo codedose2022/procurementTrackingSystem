@@ -1,11 +1,23 @@
-import ListTable from "./components/ListTable";
+import Login from "./components/Login/Login";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 
 function App() {
   return (
     <>
-    <h1>Hey</h1>
-      <ListTable />
+      <Router>
+      <Switch>
+          <Route exact path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
