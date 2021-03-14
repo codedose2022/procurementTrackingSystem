@@ -14,12 +14,13 @@ const theme = createMuiTheme({
   },
 });
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+
   return (
     <>
     
     <ThemeProvider theme={theme}>
-      <MainNav />
+      <MainNav user = {props.user}/>
       <Grid container style={{ paddingTop: "80px" }}>
         <ButtonsPanel />
       </Grid>

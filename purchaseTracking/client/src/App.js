@@ -12,7 +12,7 @@ import _ from "lodash";
 function App() {
   const state = useSelector((state) => state);
   const loggedInStatus = _.get(state, "user.loggedInStatus", "");
-  console.log(loggedInStatus)
+  const user = _.get(state, "user.user", "");
   function PrivateRoute({ children, ...rest }) {
     return (
       <Route
@@ -39,7 +39,7 @@ function App() {
         </Route>
         <Switch>
           <PrivateRoute exact path='/dashboard'>
-            <Dashboard />
+            <Dashboard user= {user} />
           </PrivateRoute>
         </Switch>
       </Router>

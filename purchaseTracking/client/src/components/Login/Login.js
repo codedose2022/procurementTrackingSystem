@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import logo from "../../images/mersat-logo.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useStyles from "./LoginStyles";
 import Visibility from "@material-ui/icons/Visibility";

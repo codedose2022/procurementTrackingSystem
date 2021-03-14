@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import logo from "../../../images/mersat-logo.png";
 import useStyles from "./MainNavStyles";
 import { withStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 
 const StyledMenu = withStyles({
   paper: {
@@ -35,9 +36,8 @@ const StyledMenu = withStyles({
     {...props}
   />
 ));
-const MainNav = () => {
+const MainNav = (props) => {
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleMenu = (event) => {
@@ -84,7 +84,7 @@ const MainNav = () => {
                   <Avatar size="large">M</Avatar>
                 </div>
                 <div className={classes.popoverContent}>
-                  <Typography variant="body2">USERNAME</Typography>
+                  <Typography variant="body2">{props.user.userInfo.username}</Typography>
                   <Typography className={classes.footText} variant="body2">
                     <Link className={classes.customLink} color="primary"> Change password </Link>
                   </Typography>

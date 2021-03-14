@@ -1,7 +1,7 @@
 import _ from "lodash";
 import * as api from "../api";
 import responseStatusConstants from '../Constants/responseStatusCode';
-import { Redirect } from 'react-router-dom';
+
 
 export const login = (loginData, callback,history) => async (dispatch) => {
   try {
