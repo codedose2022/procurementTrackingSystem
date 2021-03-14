@@ -3,15 +3,13 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Button,
   IconButton
 } from "@material-ui/core";
 import Close from '@material-ui/icons/Close'
-import React, { useState } from "react";
+import React from "react";
 import useStyles from "./ModalPopStyles";
 
-const ModalPop = ({ isOpen, handleClose, title, content, button }) => {
+const ModalPop = ({ isOpen, handleClose, title, content }) => {
   const classes = useStyles();
 
   return (
@@ -30,15 +28,10 @@ const ModalPop = ({ isOpen, handleClose, title, content, button }) => {
           </IconButton>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description">
+        <DialogContentText id="alert-dialog-slide-content" component="div">
           {content}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary" variant="contained">
-          {button}
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };

@@ -12,13 +12,14 @@ import Add from "@material-ui/icons/Add";
 import React, { useRef, useState } from "react";
 import useStyles from "./ButtonsPanelStyles";
 import ModalPop from "../Modal/ModalPop";
+import AddUser from "../Forms/AddUser";
 
 const ButtonsPanel = () => {
   const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDialogOpen = () => {
+  const handleAddUser = () => {
     setIsOpen(true);
   };
   const handleDialogClose = () => {
@@ -53,6 +54,7 @@ const ButtonsPanel = () => {
                 size="small"
                 aria-label="select merge strategy"
                 aria-haspopup="menu"
+                onClick={handleAddUser}
               >
                 <Add />
               </Button>
@@ -60,7 +62,7 @@ const ButtonsPanel = () => {
             <Button
               color="primary"
               variant="contained"
-              onClick={handleDialogOpen}
+              
             >
               <Add />
             </Button>
@@ -71,27 +73,8 @@ const ButtonsPanel = () => {
         isOpen={isOpen}
         handleClose={handleDialogClose}
         title="Add new user"
-        button="Add"
         content={
-          <form id="newUser">
-            <TextField required fullWidth label="Name" className={classes.inputMargin}></TextField>
-            <TextField required fullWidth label="Username" className={classes.inputMargin}></TextField>
-            <FormControl fullWidth>
-            <Select
-              labelId="department"
-              id="department"
-              value={department}
-              onChange={handleChange}
-              fullWidth
-              className={classes.selectMargin}
-            >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value={'Customer relations'}>Customer relations</MenuItem>
-              <MenuItem value={'Procurement'}>Procurement</MenuItem>
-            </Select>
-            </FormControl>
-            <TextField required fullWidth label="Password" className={classes.inputMargin}></TextField>
-          </form>
+          <AddUser />
         }
       ></ModalPop>
     </Container>
