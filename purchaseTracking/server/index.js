@@ -5,6 +5,8 @@ import express from "express";
 import mongoose from "mongoose";
 import auth from "./routes/authentication.js";
 import serviceRequests from "./routes/serviceRequests.js";
+import adminActions from "./routes/admin.js";
+
 dotenv.config();
 
 const app = express();
@@ -15,6 +17,8 @@ app.use(cors());
 
 app.use("/auth", auth);
 app.use("/serviceRequests", serviceRequests);
+app.use("/adminActions", adminActions);
+
 
 const PORT = process.env.PORT || 5000;
 mongoose

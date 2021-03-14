@@ -40,13 +40,13 @@ const serviceRequestSchema = mongoose.Schema(
     refNum: { type: String, required: true },
     details: [DetailsSchema],
     userId: {
-      type: [schema.Types.ObjectId],
+      type: schema.Types.ObjectId,
       ref: "userSchema",
     },
   },
   { timestamps: true }
 );
 
-const users = mongoose.model("serviceRequests", serviceRequestSchema);
+const serviceRequest = mongoose.model("serviceRequest", serviceRequestSchema);
 
-export default users;
+export default serviceRequest;
