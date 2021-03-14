@@ -3,8 +3,13 @@ const user = (state = [], action) => {
     case "USER_INFO":
       return {
         ...state,
-        loggedInStatus: action.payload,
+        user: action.payload,
       };
+      case "LOGIN":
+        return {
+          ...state,
+          loggedInStatus: action.payload,
+        };
     default:
       return { ...state };
   }

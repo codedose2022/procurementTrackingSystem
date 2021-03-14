@@ -3,14 +3,15 @@ import * as api from "../api";
 import responseStatusConstants from '../Constants/responseStatusCode';
 import { Redirect } from 'react-router-dom';
 
-export const login = (loginData, callback) => async (dispatch) => {
+export const login = (loginData, callback,history) => async (dispatch) => {
   try {
     const { data } = await api.login(loginData);
     const loginStatus = _.get(data, "status", "");
     if (loginStatus === responseStatusConstants.SUCCESS) {
       localStorage.setItem("auth-token", data.token);
       dispatch({ type: "USER_INFO", payload: data });
-      
+      dispatch({ type: 'LOGIN', payload: true });
+      history.push('/dashboard')
     } else {
       callback(_.get(data, "message", ""));
     }

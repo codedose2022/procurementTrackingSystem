@@ -1,18 +1,46 @@
 import Login from "./components/Login/Login";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { useSelector } from "react-redux";
+import _ from "lodash";
 
 function App() {
+  const state = useSelector((state) => state);
+  const loggedInStatus = _.get(state, "user.loggedInStatus", "");
+  console.log(loggedInStatus)
+  function PrivateRoute({ children, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={() => {
+          return loggedInStatus ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/",
+              }}
+            />
+          );
+        }}
+      />
+    );
+  }
   return (
     <>
       <Router>
-        <Route exact path='/login'>
+        <Route exact path='/'>
           <Login />
         </Route>
         <Switch>
-          <Route exact path='/dashboard'>
+          <PrivateRoute exact path='/dashboard'>
             <Dashboard />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
     </>

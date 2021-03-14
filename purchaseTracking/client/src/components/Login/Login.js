@@ -13,7 +13,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { validateField } from "../../Helpers/validationHelper";
 import {login} from '../../Actions/AuthenticationActions';
-import { Redirect } from 'react-router-dom';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -30,7 +30,6 @@ const Login = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-
   const [forgotPassword, setForgotPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({
@@ -50,8 +49,7 @@ const Login = () => {
     setTouched(true);
     if(!forgotPassword){
       if(validateField("password", loginData.password) === '' && validateField("username", loginData.username) === ''){
-        dispatch(login(loginData, setLoginServiceErrors));
-      
+        dispatch(login(loginData, setLoginServiceErrors, history));
       }
     }
   };
