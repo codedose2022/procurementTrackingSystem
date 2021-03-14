@@ -2,7 +2,6 @@ import _ from "lodash";
 import * as api from "../api";
 import responseStatusConstants from '../Constants/responseStatusCode';
 
-
 export const login = (loginData, callback,history) => async (dispatch) => {
   try {
     const { data } = await api.login(loginData);
@@ -16,6 +15,6 @@ export const login = (loginData, callback,history) => async (dispatch) => {
       callback(_.get(data, "message", ""));
     }
   } catch (error) {
-    console.log(error.message);
+    callback('something went wrong. please try again later');
   }
 };

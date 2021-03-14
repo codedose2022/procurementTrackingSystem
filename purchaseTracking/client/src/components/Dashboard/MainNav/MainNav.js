@@ -14,6 +14,7 @@ import logo from "../../../images/mersat-logo.png";
 import useStyles from "./MainNavStyles";
 import { withStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const StyledMenu = withStyles({
   paper: {
@@ -39,6 +40,8 @@ const StyledMenu = withStyles({
 const MainNav = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -46,6 +49,13 @@ const MainNav = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogOut = () => {
+    localStorage.setItem("auth-token", "");
+    dispatch({ type: "RESET_STORE" });
+    localStorage.setItem("master_class", "");
+    history.push("/");
   };
 
   return (
@@ -90,7 +100,7 @@ const MainNav = (props) => {
                   </Typography>
                 </div>
                 <div className={classes.popoverButton}>
-                  <Button className={classes.customBtn} size="small" variant="contained" color="primary">
+                  <Button className={classes.customBtn} size="small" variant="contained" onClick = {handleLogOut} color="primary">
                     Logout
                   </Button>
                 </div>

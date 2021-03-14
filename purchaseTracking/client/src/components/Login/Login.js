@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import {
-  Button,Card, CardContent,
-  Grid, TextField, Typography, createMuiTheme,ThemeProvider,IconButton,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  TextField,
+  Typography,
+  createMuiTheme,
+  ThemeProvider,
+  IconButton,
   Link,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -12,8 +19,7 @@ import useStyles from "./LoginStyles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { validateField } from "../../Helpers/validationHelper";
-import {login} from '../../Actions/AuthenticationActions';
-
+import { login } from "../../Actions/AuthenticationActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -47,8 +53,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    if(!forgotPassword){
-      if(validateField("password", loginData.password) === '' && validateField("username", loginData.username) === ''){
+    if (!forgotPassword) {
+      if (
+        validateField("password", loginData.password) === "" &&
+        validateField("username", loginData.username) === ""
+      ) {
+        dispatch(login(loginData, setLoginServiceErrors, history));
+      }
+    } else {
+      if (validateField("username", loginData.username) === "") {
         dispatch(login(loginData, setLoginServiceErrors, history));
       }
     }
@@ -70,8 +83,10 @@ const Login = () => {
                 className={classes.LoginForm}
                 autoComplete='off'
                 onSubmit={handleSubmit}
-              > 
-              {!forgotPassword && serviceErrors && <Alert severity="error"> {serviceErrors} </Alert>}
+              >
+                {!forgotPassword && serviceErrors && (
+                  <Alert severity='error'> {serviceErrors} </Alert>
+                )}
                 {!forgotPassword && (
                   <>
                     <TextField
@@ -109,7 +124,8 @@ const Login = () => {
                         fullWidth
                         value={loginData.password}
                         helperText={
-                          touched && validateField("password", loginData.password)
+                          touched &&
+                          validateField("password", loginData.password)
                         }
                         onChange={(e) =>
                           setLoginData({
@@ -143,7 +159,7 @@ const Login = () => {
                       fullWidth
                       type='text'
                       helperText={
-                        touched &&  validateField("username", loginData.username)
+                        touched && validateField("username", loginData.username)
                       }
                       value={loginData.username}
                       onChange={(e) =>
@@ -164,7 +180,7 @@ const Login = () => {
                 >
                   {forgotPassword ? "Get reset link" : "Login"}
                 </Button>
-                <Typography className={classes.footText} variant="body1">
+                <Typography className={classes.footText} variant='body1'>
                   <Link className={classes.Link} onClick={handleForgotPassword}>
                     {forgotPassword ? "Login" : "Forgot Password"}
                   </Link>

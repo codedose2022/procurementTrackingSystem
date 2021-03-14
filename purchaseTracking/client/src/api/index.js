@@ -1,4 +1,5 @@
 import axios from "axios";
-const path = 'http://localhost:5000/'
-export const login = (loginData) =>
-  axios.post(`auth/login`, loginData);
+
+export const login = (loginData) => axios.post(`auth/login`, loginData);
+export const sendResetLink = (email) => axios.post(`auth/sendResetLink`, email);
+export const resetPassword = (pwd) => axios.post(`auth/resetPassword`, pwd);
