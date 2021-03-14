@@ -22,11 +22,10 @@ const AddUser = () => {
         firstName: Yup.string()
           .min(3, "Name must be 3 characters or more")
           .max(15, "Must be 15 characters or less")
-          .required("Name should no be empty"),
+          .required("Name should not be empty"),
         userName: Yup.string()
-          .min(3, "Username must be 3 characters or more")
-          .max(20, "Must be 15 characters or less")
-          .required("Username should no be empty"),
+          .email('Invalid email address')
+          .required("Username should not be empty"),
         department: Yup.string()
           .required("Department is required"),
       })}
