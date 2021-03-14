@@ -6,11 +6,21 @@ export default makeStyles((theme) => ({
         color: '#ff0000',
     },
     formControl: {
-        margin: theme.spacing(1),
+        margin: '8px 0',
         minWidth: 120,
       },
       selectEmpty: {
         marginTop: theme.spacing(2),
       },
-    
+      userList:{
+        alignItems: 'center',
+      },
+      userName:{
+        fontSize: '12px',
+      },
+      deleteUser:{
+        '&:hover':{
+          color: '#c50000',
+        }
+      }
 }));

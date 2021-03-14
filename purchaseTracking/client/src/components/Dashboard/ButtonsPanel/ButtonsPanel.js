@@ -1,37 +1,49 @@
-import {
-  Container,
-  Grid,
-  ButtonGroup,
-  Button
-} from "@material-ui/core";
+import { Container, Grid, ButtonGroup, Button } from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
 import React, { useRef, useState } from "react";
 import useStyles from "./ButtonsPanelStyles";
 import ModalPop from "../Modal/ModalPop";
 import AddUser from "../Forms/AddUser";
+import ViewDeleteUser from "../Forms/ViewDeleteUser";
 
 const ButtonsPanel = () => {
   const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [popupContent, setpopupContent] = useState(false);
 
-  const handleAddUser = () => {
-    setIsOpen(true);
-  };
   const handleDialogClose = () => {
     setIsOpen(false);
   };
+
   const anchorRef = useRef(null);
 
-  const showUsers = () => {
-    console.log("CLICKED");
+  const handleAddUser = () => {
+    setpopupContent(true);
+    setIsOpen(true);
+  };
+  const handleShowUsers = () => {
+    setpopupContent(false);
+    setIsOpen(true);
   };
 
-  const [department, setDepartment] = useState("");
+  const data = [
+    {
+      id: 1,
+      firstName: "John Doe",
+      userName: "jd@mg.com",
+      department: "Admin",
+    },
+    {
+      id: 2,
+      firstName: "Victor Wayne",
+      userName: "vw@mg.com",
+      department: "Pro",
+    },
+    { id: 3, firstName: "Jane Doe", userName: "jad@mg.com", department: "Bdm" },
+  ];
 
-  const handleChange = (event) => {
-    setDepartment(event.target.value);
-  };
+  const handleUserDelete = () => {};
 
   return (
     <Container>
@@ -44,23 +56,21 @@ const ButtonsPanel = () => {
               ref={anchorRef}
               aria-label="split button"
             >
-              <Button onClick={showUsers}>USERS</Button>
+              <Button onClick={handleShowUsers} id="fff">
+                USERS
+              </Button>
               <Button
-                color="primary"
                 size="small"
                 aria-label="select merge strategy"
                 aria-haspopup="menu"
                 onClick={handleAddUser}
+                id="hello"
               >
                 <Add />
               </Button>
             </ButtonGroup>
-            <Button
-              color="primary"
-              variant="contained"
-              
-            >
-              <Add />
+            <Button color="primary" variant="contained">
+              <Add /> Add New request
             </Button>
           </div>
         </Grid>
@@ -68,9 +78,23 @@ const ButtonsPanel = () => {
       <ModalPop
         isOpen={isOpen}
         handleClose={handleDialogClose}
-        title="Add new user"
+        title={popupContent ? "Add new user" : "Users"}
         content={
-          <AddUser />
+          popupContent ? (
+            <AddUser />
+          ) : (
+            <>
+              {data.map((user) => (
+                <ViewDeleteUser
+                  firstName={user.firstName}
+                  username={user.userName}
+                  department={user.department}
+                  avatarLetter={user.firstName.charAt(0)}
+                  handleUserDelete={handleUserDelete}
+                />
+              ))}
+            </>
+          )
         }
       ></ModalPop>
     </Container>

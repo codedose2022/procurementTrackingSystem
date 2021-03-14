@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
 import {
   Button,
@@ -57,7 +57,7 @@ const AddUser = () => {
               type="text"
               fullWidth
               label="Username"
-              placeholder="John Doe"
+              placeholder="Johndoe@example.com"
               {...formik.getFieldProps("userName")}
             />
             {formik.touched.userName && formik.errors.userName ? (
