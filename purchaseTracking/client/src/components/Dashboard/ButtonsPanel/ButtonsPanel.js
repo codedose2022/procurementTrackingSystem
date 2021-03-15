@@ -5,13 +5,20 @@ import useStyles from "./ButtonsPanelStyles";
 import ModalPop from "../Modal/ModalPop";
 import AddUser from "../Forms/AddUser";
 import ViewDeleteUser from "../Forms/ViewDeleteUser";
+import { useHistory } from "react-router-dom";
+import { useDispatch,useSelector } from "react-redux";
+import _ from 'lodash';
 
-const ButtonsPanel = () => {
+
+const ButtonsPanel = ({user}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const state = useSelector((state) => state);
 
   const [isOpen, setIsOpen] = useState(false);
   const [popupContent, setpopupContent] = useState(false);
-
+  let userData = _.get(state, "user.usersList", []);
   const handleDialogClose = () => {
     setIsOpen(false);
   };
@@ -26,24 +33,6 @@ const ButtonsPanel = () => {
     setpopupContent(false);
     setIsOpen(true);
   };
-
-  const data = [
-    {
-      id: 1,
-      firstName: "John Doe",
-      userName: "jd@mg.com",
-      department: "Admin",
-    },
-    {
-      id: 2,
-      firstName: "Victor Wayne",
-      userName: "vw@mg.com",
-      department: "Pro",
-    },
-    { id: 3, firstName: "Jane Doe", userName: "jad@mg.com", department: "Bdm" },
-  ];
-
-  const handleUserDelete = () => {};
 
   return (
     <Container>
@@ -81,16 +70,17 @@ const ButtonsPanel = () => {
         title={popupContent ? "Add new user" : "Users"}
         content={
           popupContent ? (
-            <AddUser />
+            <AddUser user={user} handleDialogClose={handleDialogClose}/>
           ) : (
             <>
-              {data.map((user) => (
+              {userData.map((u_data) => (
                 <ViewDeleteUser
-                  firstName={user.firstName}
-                  username={user.userName}
-                  department={user.department}
-                  avatarLetter={user.firstName.charAt(0)}
-                  handleUserDelete={handleUserDelete}
+                  firstName={u_data.name}
+                  username={u_data.username}
+                  department={u_data.department}
+                  avatarLetter={u_data.name.charAt(0)}
+                  id={u_data._id}
+                  user={user}
                 />
               ))}
             </>

@@ -11,3 +11,16 @@ export const getServiceRequests = (userId,token ) =>
   axios.post(`serviceRequests/getServiceRequests`, userId, {
     headers: { "x-auth-token": token },
   });
+
+  export const getUsers = (token) =>
+  axios.post(`adminActions/getUsers`, null, {
+    headers: { "x-auth-token": token },
+  });
+export const deleteUser = (id, token) =>
+  axios.post(`adminActions/deleteUser`, id, {
+    headers: { "x-auth-token": token },
+  });
+export const createUser = (userData, token) =>
+  axios.post(`adminActions/createUser`, userData, {
+    headers: { "x-auth-token": token },
+  });

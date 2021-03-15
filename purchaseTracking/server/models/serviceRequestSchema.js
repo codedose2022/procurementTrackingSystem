@@ -6,6 +6,10 @@ const CommentsSchema = mongoose.Schema(
     comments: {
       type: String,
     },
+    postedAt:{
+      type: Date,
+      default: new Date()
+    }
   },
   { timestamps: true }
 );
@@ -14,6 +18,10 @@ const ReplySchema = mongoose.Schema(
     reply: {
       type: String,
     },
+    postedAt:{
+      type: Date,
+      default: new Date()
+    }
   },
   { timestamps: true }
 );

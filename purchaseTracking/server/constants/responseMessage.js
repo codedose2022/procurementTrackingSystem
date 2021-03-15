@@ -7,6 +7,7 @@ const responseMessageConstants = {
   RESET_LINK:'Password reset link sent successfully. Please check your email.',
   INVALID_LINK:'Password reset link is either invalid or expired.',
 
+  EXISTING_USER:"An account with this email already exists.",
   USER_CREATED: "User created successfully",
   USER_DELETED: "User deleted successfully",
   

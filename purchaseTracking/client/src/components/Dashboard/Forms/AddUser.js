@@ -1,83 +1,89 @@
-import React from "react";
-import { Formik } from "formik";
-import {
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
-import * as Yup from "yup";
+import { Button, FormControl, MenuItem, TextField } from "@material-ui/core";
+import { Formik, Form, ErrorMessage } from "formik";
+import { React,  useState  } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { createUser } from "../../../Actions/adminActions";
 import useStyles from "./FormStyles";
+import * as Yup from "yup";
 
-const AddUser = () => {
+const AddUser = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const initialValues = {
+    name: "",
+    username: "",
+    department: "",
+  };
+  const onSubmit = (values) => {
+    props.handleDialogClose();
+    dispatch(createUser(values, props.user.token));
+  };
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(3, "Name must be 3 characters or more")
+      .max(30, "Must be 30 characters or less")
+      .required("Name is required."),
+    username: Yup.string()
+      .email("Invalid email address")
+      .required("Username is required."),
+    department: Yup.string().required("Department is required."),
+  });
 
   return (
     <Formik
-      initialValues={{ firstName: "", userName: "", department: "" }}
-      validationSchema={Yup.object({
-        firstName: Yup.string()
-          .min(3, "Name must be 3 characters or more")
-          .max(15, "Must be 15 characters or less")
-          .required("Name should not be empty"),
-        userName: Yup.string()
-          .email('Invalid email address')
-          .required("Username should not be empty"),
-        department: Yup.string()
-          .required("Department is required"),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
       {(formik) => (
-        <form onSubmit={formik.handleSubmit}>
+        <Form>
           <FormControl className={classes.formControl} fullWidth>
             <TextField
-              id="firstName"
+              id="name"
+              name="name"
               type="text"
               label="Name"
               placeholder="John Doe"
-              {...formik.getFieldProps("firstName")}
+              {...formik.getFieldProps("name")}
             />
-            {formik.touched.firstName && formik.errors.firstName ? (
-              <div className={classes.Error}>{formik.errors.firstName}</div>
-            ) : null}
+            <div className={classes.Error}>
+              <ErrorMessage name="name" />
+            </div>
           </FormControl>
 
           <FormControl className={classes.formControl} fullWidth>
             <TextField
-              id="userName"
+              id="username"
+              name="username"
               type="text"
               fullWidth
               label="Username"
-              placeholder="Johndoe@example.com"
-              {...formik.getFieldProps("userName")}
+              placeholder="johndoe@example.com"
+              {...formik.getFieldProps("username")}
             />
-            {formik.touched.userName && formik.errors.userName ? (
-              <div className={classes.Error}>{formik.errors.userName}</div>
-            ) : null}
+            <div className={classes.Error}>
+              <ErrorMessage name="username" />
+            </div>
           </FormControl>
 
           <FormControl className={classes.formControl} fullWidth>
-            <InputLabel id="demo-simple-select-label">Department</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+            <TextField
+              id="department"
+              name="department"
+              label="Department"
+              fullWidth
               {...formik.getFieldProps("department")}
+              select
             >
-              <MenuItem value={'Customer relations'}>Customer relations</MenuItem>
-              <MenuItem value={'Procurement'}>Procurement</MenuItem>              
-            </Select>
-            {formik.touched.department && formik.errors.department ? (
-              <div className={classes.Error}>{formik.errors.department}</div>
-            ) : null}
+              <MenuItem value="Customer Relations">Customer Relations</MenuItem>
+              <MenuItem value="Procurement">Procurement</MenuItem>
+            </TextField>
+            <div className={classes.Error}>
+              <ErrorMessage name="department" />
+            </div>
           </FormControl>
 
           <FormControl className={classes.formControl} fullWidth>
@@ -85,7 +91,7 @@ const AddUser = () => {
               Submit
             </Button>
           </FormControl>
-        </form>
+        </Form>
       )}
     </Formik>
   );

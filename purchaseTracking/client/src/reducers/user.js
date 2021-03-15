@@ -10,6 +10,11 @@ const user = (state = [], action) => {
           ...state,
           loggedInStatus: action.payload,
         };
+        case "USERS_LIST":
+          return {
+            ...state,
+            usersList: action.payload,
+          };
     default:
       return { ...state };
   }

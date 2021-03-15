@@ -5,5 +5,6 @@ const responseStatusConstants = {
   INVALID_PASSWORD: "22",
   PASSWORD_UNMATCHED: "23",
   VALIDATION_ERROR: "24",
+  EXISTING_USER:'25'
 };
 export default responseStatusConstants;

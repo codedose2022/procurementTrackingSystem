@@ -44,7 +44,7 @@ const Dashboard = (props) => {
           <>
             <MainNav user={props.user} />
             <Grid container style={{ paddingTop: "80px" }}>
-              <ButtonsPanel />
+              <ButtonsPanel user={props.user}/>
             </Grid>
             <MasterTable user={props.user} />
           </>

@@ -20,6 +20,7 @@ const ModalPop = ({ isOpen, handleClose, title, content }) => {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
       fullWidth
+      disableBackdropClick
     >
       <DialogTitle id="alert-dialog-slide-title" className={classes.modalTitle}>
         {title}
