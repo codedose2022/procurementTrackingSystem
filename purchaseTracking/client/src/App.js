@@ -3,43 +3,42 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { useSelector } from "react-redux";
 import _ from "lodash";
+import { useEffect } from "react";
+import { isTokenValid } from "./api/index";
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   const state = useSelector((state) => state);
   const loggedInStatus = _.get(state, "user.loggedInStatus", "");
   const user = _.get(state, "user.user", "");
-  function PrivateRoute({ children, ...rest }) {
-    return (
-      <Route
-        {...rest}
-        render={() => {
-          return loggedInStatus ? (
-            children
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/",
-              }}
-            />
-          );
-        }}
-      />
-    );
-  }
+
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      const tokenRes = await isTokenValid(user.token);
+      if (!tokenRes.data) {
+        localStorage.setItem("auth-token", "");
+        localStorage.setItem("master_class", "");
+      }
+    };
+    checkTokenValidity();
+  }, []);
+
   return (
     <>
       <Router>
         <Route exact path='/'>
           <Login />
         </Route>
+        <Route exact path='/reset/:key'>
+          hi
+        </Route>
         <Switch>
-          <PrivateRoute exact path='/dashboard'>
-            <Dashboard user= {user} />
+          <PrivateRoute exact path='/dashboard' loggedInStatus = {loggedInStatus}>
+            <Dashboard user={user} />
           </PrivateRoute>
         </Switch>
       </Router>

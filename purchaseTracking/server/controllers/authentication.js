@@ -23,8 +23,7 @@ export const login = async (req, res) => {
       return res.status(200).json(responseData);
     }
     const isMatch = await bcryptjs.compare(password, user.password);
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "4h" });
     if (!isMatch) {
       responseData.message = responseMessageConstants.INVALID_PASSWORD;
       responseData.status = responseStatusConstants.INVALID_PASSWORD;
@@ -175,16 +174,20 @@ export const isTokenValid = async (req, res) => {
   try {
     const token = req.header("x-auth-token");
     if (!token) return res.json(false);
-
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) return res.json(false);
-
-    const user = await employeeDetails.findById(verified.id);
-    if (!user) return res.json(false);
-
-    return res.json(true);
+    try{
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      if (!verified) return res.json(false);
+  
+      const user = await User.findById(verified.id);
+      if (!user) return res.json(false);
+      return res.json(true);
+    }
+    catch{
+      return res.json(false)
+    }
+   
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).json({message : error.message});
   }
 };
 export default router;

@@ -19,7 +19,8 @@ import useStyles from "./LoginStyles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { validateField } from "../../Helpers/validationHelper";
-import { login } from "../../Actions/AuthenticationActions";
+import { login, sendResetLink } from "../../Actions/AuthenticationActions";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -42,9 +43,12 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const [serviceErrors, setLoginServiceErrors] = useState("");
+  const [serviceErrors, setServiceErrors] = useState("");
+  const [resetSuccessMsg, setResetSuccessMsg] = useState("");
   const [touched, setTouched] = useState(false);
   const handleForgotPassword = () => {
+    setServiceErrors('');
+    setResetSuccessMsg('');
     setForgotPassword(!forgotPassword);
   };
   const handleShowPassword = () => {
@@ -53,16 +57,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
+    setServiceErrors('')
     if (!forgotPassword) {
       if (
         validateField("password", loginData.password) === "" &&
         validateField("username", loginData.username) === ""
       ) {
-        dispatch(login(loginData, setLoginServiceErrors, history));
+        dispatch(login(loginData, setServiceErrors, history));
       }
     } else {
       if (validateField("username", loginData.username) === "") {
-        dispatch(login(loginData, setLoginServiceErrors, history));
+        dispatch(sendResetLink(loginData.username, setServiceErrors, setResetSuccessMsg));
       }
     }
   };
@@ -84,9 +89,13 @@ const Login = () => {
                 autoComplete='off'
                 onSubmit={handleSubmit}
               >
-                {!forgotPassword && serviceErrors && (
+                { serviceErrors && (
                   <Alert severity='error'> {serviceErrors} </Alert>
                 )}
+                {
+                  forgotPassword && resetSuccessMsg && 
+                  <Alert severity='success'> {resetSuccessMsg} </Alert>
+                }
                 {!forgotPassword && (
                   <>
                     <TextField
