@@ -1,6 +1,6 @@
 import { Button, FormControl, MenuItem, TextField } from "@material-ui/core";
 import { Formik, Form, ErrorMessage } from "formik";
-import { React,  useState  } from "react";
+import { React, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { createUser } from "../../../Actions/adminActions";
@@ -18,8 +18,15 @@ const AddUser = (props) => {
     department: "",
   };
   const onSubmit = (values) => {
-    props.handleDialogClose();
-    dispatch(createUser(values, props.user.token));
+    dispatch(
+      createUser(
+        values,
+        props.user.token,
+        props.setSuccessMessage,
+        props.setErrorMessage,
+        props.handleDialogClose
+      )
+    );
   };
   const validationSchema = Yup.object({
     name: Yup.string()

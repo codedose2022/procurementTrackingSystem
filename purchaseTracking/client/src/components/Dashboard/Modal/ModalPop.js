@@ -3,13 +3,21 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
-import Close from '@material-ui/icons/Close'
+import Close from "@material-ui/icons/Close";
 import React from "react";
 import useStyles from "./ModalPopStyles";
+import Alert from "@material-ui/lab/Alert";
 
-const ModalPop = ({ isOpen, handleClose, title, content }) => {
+const ModalPop = ({
+  isOpen,
+  handleClose,
+  title,
+  content,
+  successMessage,
+  errorMessage,
+}) => {
   const classes = useStyles();
 
   return (
@@ -24,12 +32,14 @@ const ModalPop = ({ isOpen, handleClose, title, content }) => {
     >
       <DialogTitle id="alert-dialog-slide-title" className={classes.modalTitle}>
         {title}
-          <IconButton color="secondary" size="small" onClick={handleClose}>
-            <Close />
-          </IconButton>
+        <IconButton color="secondary" size="small" onClick={handleClose}>
+          <Close />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-content" component="div">
+          {successMessage && <Alert severity="success"> {successMessage} </Alert>}
+          {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
           {content}
         </DialogContentText>
       </DialogContent>

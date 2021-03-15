@@ -6,16 +6,16 @@ import ModalPop from "../Modal/ModalPop";
 import AddUser from "../Forms/AddUser";
 import ViewDeleteUser from "../Forms/ViewDeleteUser";
 import { useHistory } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
-import _ from 'lodash';
+import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 
-
-const ButtonsPanel = ({user}) => {
+const ButtonsPanel = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const state = useSelector((state) => state);
-
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [popupContent, setpopupContent] = useState(false);
   let userData = _.get(state, "user.usersList", []);
@@ -26,10 +26,14 @@ const ButtonsPanel = ({user}) => {
   const anchorRef = useRef(null);
 
   const handleAddUser = () => {
+    setSuccessMessage("");
+    setErrorMessage("");
     setpopupContent(true);
     setIsOpen(true);
   };
   const handleShowUsers = () => {
+    setSuccessMessage("");
+    setErrorMessage("");
     setpopupContent(false);
     setIsOpen(true);
   };
@@ -68,13 +72,22 @@ const ButtonsPanel = ({user}) => {
         isOpen={isOpen}
         handleClose={handleDialogClose}
         title={popupContent ? "Add new user" : "Users"}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
         content={
           popupContent ? (
-            <AddUser user={user} handleDialogClose={handleDialogClose}/>
+            <AddUser
+              setSuccessMessage={setSuccessMessage}
+              setErrorMessage={setErrorMessage}
+              user={user}
+              handleDialogClose={handleDialogClose}
+            />
           ) : (
             <>
               {userData.map((u_data) => (
                 <ViewDeleteUser
+                  setSuccessMessage={setSuccessMessage}
+                  setErrorMessage={setErrorMessage}
                   firstName={u_data.name}
                   username={u_data.username}
                   department={u_data.department}

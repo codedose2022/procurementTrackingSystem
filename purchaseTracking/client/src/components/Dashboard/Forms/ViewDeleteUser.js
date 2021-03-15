@@ -13,12 +13,16 @@ const ViewDeleteUser = ({
   department,
   id,
   user,
+  setSuccessMessage,
+  setErrorMessage,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const handleUserDelete = () => {
-    dispatch(deleteUser({ id }, user.token));
+    dispatch(
+      deleteUser({ id }, user.token, setSuccessMessage, setErrorMessage)
+    );
   };
 
   return (

@@ -12,24 +12,23 @@ export const getUsers = (token) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (id, token, callback) => async (dispatch) => {
+export const deleteUser = (id, token, setSuccessMessage,setErrorMessage) => async (dispatch) => {
   try {
     const { data } = await api.deleteUser(id, token);
     const deleteStatus = _.get(data, "status", "");
     const usersList = _.get(data, "users", []);
     if (deleteStatus === responseStatusConstants.SUCCESS) {
       dispatch({ type: "USERS_LIST", payload: usersList });
-      // callback(_.get(data, "message", ""));
+      setSuccessMessage(_.get(data, "message", ""));
     } else {
-      // callback(_.get(data, "message", ""));
+      setErrorMessage(_.get(data, "message", ""));
     }
   } catch (error) {
-    console.log("Error");
-    // callback("Something went wrong, Please try again later.");
+    setErrorMessage("Something went wrong, Please try again later.");
   }
 };
 
-export const createUser = (userData, token, callback) => async (
+export const createUser = (userData, token, setSuccessMessage,setErrorMessage,handleDialogClose) => async (
   dispatch
 ) => {
   try {
@@ -38,10 +37,12 @@ export const createUser = (userData, token, callback) => async (
     const usersList = _.get(data, "users", []);
     if (createUserStatus === responseStatusConstants.SUCCESS) {
       dispatch({ type: "USERS_LIST", payload: usersList });
+      setSuccessMessage(_.get(data, "message", ""))
+      handleDialogClose();
     } else {
-      callback(_.get(data, "message", ""));
+      setErrorMessage(_.get(data, "message", ""));
     }
   } catch (error) {
-    console.log("Error");
+    setErrorMessage("Something went wrong, Please try again later.");
   }
 };
