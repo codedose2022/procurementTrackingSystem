@@ -16,7 +16,7 @@ export const getServiceRequests = async (req, res) => {
   try {
     let serviceRequestsList = [];
     const user = await Users.findOne({ _id: req.body.userId });
-    if (user.department === constants.ADMIN) {
+    if ([constants.ADMIN,constants.PR].includes(user.department)) {
       serviceRequestsList = await ServiceRequests.find().sort({
         createdAt: -1,
       });

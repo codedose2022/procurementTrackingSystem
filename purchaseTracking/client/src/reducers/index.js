@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import user from "./user";
+import serviceRequest from "./serviceRequest";
 
 const appReducer = combineReducers({
   user,
+  serviceRequest
 });
 
 // reset the state of a redux store
