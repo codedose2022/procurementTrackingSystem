@@ -1,4 +1,10 @@
-import { Container, Grid, ButtonGroup, Button } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  ButtonGroup,
+  Button,
+  Snackbar,
+} from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
 import React, { useRef, useState } from "react";
 import useStyles from "./ButtonsPanelStyles";
@@ -6,15 +12,15 @@ import ModalPop from "../Modal/ModalPop";
 import AddUser from "../Forms/AddUser";
 import ViewDeleteUser from "../Forms/ViewDeleteUser";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import _ from "lodash";
+import MuiAlert  from "@material-ui/lab/Alert";
 
 const ButtonsPanel = ({ user }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const history = useHistory();
   const state = useSelector((state) => state);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [displaySnackbarText, setDisplaySnackbarText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [popupContent, setpopupContent] = useState(false);
@@ -22,22 +28,30 @@ const ButtonsPanel = ({ user }) => {
   const handleDialogClose = () => {
     setIsOpen(false);
   };
-
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
   const anchorRef = useRef(null);
 
   const handleAddUser = () => {
-    setSuccessMessage("");
+ 
     setErrorMessage("");
     setpopupContent(true);
     setIsOpen(true);
   };
   const handleShowUsers = () => {
-    setSuccessMessage("");
+  
     setErrorMessage("");
     setpopupContent(false);
     setIsOpen(true);
   };
-
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  
   return (
     <Container>
       <Grid container>
@@ -68,25 +82,36 @@ const ButtonsPanel = ({ user }) => {
           </div>
         </Grid>
       </Grid>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert 
+        severity="success">{displaySnackbarText}</Alert>
+      </Snackbar>
       <ModalPop
         isOpen={isOpen}
         handleClose={handleDialogClose}
         title={popupContent ? "Add new user" : "Users"}
-        successMessage={successMessage}
         errorMessage={errorMessage}
         content={
           popupContent ? (
             <AddUser
-              setSuccessMessage={setSuccessMessage}
+              setShowSnackbar={setShowSnackbar}
+              setDisplaySnackbarText={setDisplaySnackbarText}
               setErrorMessage={setErrorMessage}
               user={user}
               handleDialogClose={handleDialogClose}
             />
           ) : (
             <>
-              {userData.map((u_data) => (
+              {userData.map((u_data,index) => (
                 <ViewDeleteUser
-                  setSuccessMessage={setSuccessMessage}
+                  key={index}
+                  setShowSnackbar={setShowSnackbar}
+                  setDisplaySnackbarText={setDisplaySnackbarText}       
                   setErrorMessage={setErrorMessage}
                   firstName={u_data.name}
                   username={u_data.username}

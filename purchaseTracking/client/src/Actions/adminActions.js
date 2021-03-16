@@ -12,14 +12,21 @@ export const getUsers = (token) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (id, token, setSuccessMessage,setErrorMessage) => async (dispatch) => {
+export const deleteUser = (
+  id,
+  token,
+  setErrorMessage,
+  setShowSnackbar,
+  setDisplaySnackbarText
+) => async (dispatch) => {
   try {
     const { data } = await api.deleteUser(id, token);
     const deleteStatus = _.get(data, "status", "");
     const usersList = _.get(data, "users", []);
     if (deleteStatus === responseStatusConstants.SUCCESS) {
       dispatch({ type: "USERS_LIST", payload: usersList });
-      setSuccessMessage(_.get(data, "message", ""));
+      setShowSnackbar(true);
+      setDisplaySnackbarText(_.get(data, "message", ""));
     } else {
       setErrorMessage(_.get(data, "message", ""));
     }
@@ -28,18 +35,25 @@ export const deleteUser = (id, token, setSuccessMessage,setErrorMessage) => asyn
   }
 };
 
-export const createUser = (userData, token, setSuccessMessage,setErrorMessage,handleDialogClose) => async (
-  dispatch
-) => {
+export const createUser = (
+  userData,
+  token,
+  setErrorMessage,
+  handleDialogClose,
+  setShowSnackbar,
+  setDisplaySnackbarText
+) => async (dispatch) => {
   try {
     const { data } = await api.createUser(userData, token);
     const createUserStatus = _.get(data, "status", "");
     const usersList = _.get(data, "users", []);
     if (createUserStatus === responseStatusConstants.SUCCESS) {
       dispatch({ type: "USERS_LIST", payload: usersList });
-      setSuccessMessage(_.get(data, "message", ""))
+      setShowSnackbar(true);
+      setDisplaySnackbarText(_.get(data, "message", ""));
       handleDialogClose();
     } else {
+      setShowSnackbar(false);
       setErrorMessage(_.get(data, "message", ""));
     }
   } catch (error) {

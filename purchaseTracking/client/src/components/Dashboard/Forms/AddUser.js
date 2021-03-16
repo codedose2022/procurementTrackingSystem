@@ -1,8 +1,8 @@
 import { Button, FormControl, MenuItem, TextField } from "@material-ui/core";
 import { Formik, Form, ErrorMessage } from "formik";
-import { React, useState } from "react";
+import  React  from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+
 import { createUser } from "../../../Actions/adminActions";
 import useStyles from "./FormStyles";
 import * as Yup from "yup";
@@ -10,7 +10,6 @@ import * as Yup from "yup";
 const AddUser = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const initialValues = {
     name: "",
@@ -18,13 +17,15 @@ const AddUser = (props) => {
     department: "",
   };
   const onSubmit = (values) => {
+    props.setErrorMessage("");
     dispatch(
       createUser(
         values,
         props.user.token,
-        props.setSuccessMessage,
         props.setErrorMessage,
-        props.handleDialogClose
+        props.handleDialogClose,
+        props.setShowSnackbar,
+        props.setDisplaySnackbarText
       )
     );
   };

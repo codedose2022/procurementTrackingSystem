@@ -2,7 +2,6 @@ import { Grid, Avatar, Typography, IconButton } from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
 import useStyles from "./FormStyles";
 import { deleteUser } from "../../../Actions/adminActions";
 
@@ -13,15 +12,22 @@ const ViewDeleteUser = ({
   department,
   id,
   user,
-  setSuccessMessage,
   setErrorMessage,
+  setShowSnackbar,
+  setDisplaySnackbarText,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
   const handleUserDelete = () => {
+    setErrorMessage("");
     dispatch(
-      deleteUser({ id }, user.token, setSuccessMessage, setErrorMessage)
+      deleteUser(
+        { id },
+        user.token,
+        setErrorMessage,
+        setShowSnackbar,
+        setDisplaySnackbarText
+      )
     );
   };
 

@@ -15,7 +15,6 @@ const ModalPop = ({
   handleClose,
   title,
   content,
-  successMessage,
   errorMessage,
 }) => {
   const classes = useStyles();
@@ -23,7 +22,6 @@ const ModalPop = ({
   return (
     <Dialog
       open={isOpen}
-      keepMounted
       onClose={handleClose}
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
@@ -38,7 +36,6 @@ const ModalPop = ({
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-content" component="div">
-          {successMessage && <Alert severity="success"> {successMessage} </Alert>}
           {errorMessage && <Alert severity="error"> {errorMessage} </Alert>}
           {content}
         </DialogContentText>
