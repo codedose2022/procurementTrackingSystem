@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
         display: 'flex',
     },
     arrangeButton:{
-        width: '30%',
         display: 'flex',
         justifyContent: 'space-between',
     }

@@ -13,7 +13,7 @@ const responseMessageConstants = {
   
   SERVICE_REQUEST_CREATED : 'Request created successfully.',
   SERVICE_REQUEST_UPDATED : 'Request updated successfully.',
-  COMMENTS_ADDED_SUCCESS : 'Your comments have been added successfully.'.includes,
+  COMMENTS_ADDED_SUCCESS : 'Your comments have been added successfully.',
   INVALID_ID : 'Unable to update as the id is invalid.',
    
 }

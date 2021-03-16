@@ -57,11 +57,12 @@ const ButtonsPanel = ({ user }) => {
       <Grid container>
         <Grid item lg={12} className={classes.ButtonsPanel}>
           <div className={classes.arrangeButton}>
-            <ButtonGroup
+           {user.userInfo.department === 'Admin' && <ButtonGroup
               variant="contained"
               color="primary"
               ref={anchorRef}
               aria-label="split button"
+              style = {{marginRight : '20px'}}
             >
               <Button onClick={handleShowUsers} id="fff">
                 USERS
@@ -75,7 +76,7 @@ const ButtonsPanel = ({ user }) => {
               >
                 <Add />
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> }
             <Button color="primary" variant="contained">
               <Add /> Add New request
             </Button>
