@@ -5,7 +5,7 @@ import ButtonsPanel from "./ButtonsPanel/ButtonsPanel";
 import MainNav from "./MainNav/MainNav";
 import { getAllServiceRequests } from "../../Actions/serviceRequestActions";
 import Alert from "@material-ui/lab/Alert";
-import MasterTable from "../MasterTable/MasterTable";
+import MasterTable from "./MasterTable/MasterTable";
 import { isTokenValid } from "../../api/index";
 import { useHistory } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
