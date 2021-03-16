@@ -138,7 +138,7 @@ const ButtonsPanel = ({ user }) => {
                   firstName={u_data.name}
                   username={u_data.username}
                   department={u_data.department}
-                  avatarLetter={u_data.name.charAt(0)}
+                  avatarLetter={u_data.name.charAt(0).toUpperCase()}
                   id={u_data._id}
                   user={user}
                 />

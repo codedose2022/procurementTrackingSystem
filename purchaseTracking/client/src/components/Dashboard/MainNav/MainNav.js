@@ -94,7 +94,7 @@ const MainNav = (props) => {
             >
               <div className={classes.menuPopover}>
                 <div className={classes.popoverAvatar}>
-                  <Avatar size="large">M</Avatar>
+                  <Avatar size="large">{props.user.userInfo.username.charAt(0).toUpperCase()}</Avatar>
                 </div>
                 <div className={classes.popoverContent}>
                   <Typography variant="body2">{props.user.userInfo.username}</Typography>
