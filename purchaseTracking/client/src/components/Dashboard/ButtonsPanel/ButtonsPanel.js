@@ -1,32 +1,35 @@
 import {
+  Button,
+  ButtonGroup,
   Container,
   Grid,
-  ButtonGroup,
-  Button,
   Snackbar,
 } from "@material-ui/core";
 import Add from "@material-ui/icons/Add";
+import MuiAlert from "@material-ui/lab/Alert";
+import _ from "lodash";
 import React, { useRef, useState } from "react";
-import useStyles from "./ButtonsPanelStyles";
-import ModalPop from "../Modal/ModalPop";
+import { useSelector } from "react-redux";
+import AddRequest from "../Forms/AddRequest";
 import AddUser from "../Forms/AddUser";
 import ViewDeleteUser from "../Forms/ViewDeleteUser";
-import { useHistory } from "react-router-dom";
-import {  useSelector } from "react-redux";
-import _ from "lodash";
-import MuiAlert  from "@material-ui/lab/Alert";
+import ModalPop from "../Modal/ModalPop";
+import useStyles from "./ButtonsPanelStyles";
 
 const ButtonsPanel = ({ user }) => {
   const classes = useStyles();
+  const isAdmin = user.userInfo.department;
   const state = useSelector((state) => state);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [displaySnackbarText, setDisplaySnackbarText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [reqModOpen, setReqModOpen] = useState(false);
   const [popupContent, setpopupContent] = useState(false);
   let userData = _.get(state, "user.usersList", []);
   const handleDialogClose = () => {
     setIsOpen(false);
+    setReqModOpen(false);
   };
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
@@ -35,15 +38,16 @@ const ButtonsPanel = ({ user }) => {
     setShowSnackbar(false);
   };
   const anchorRef = useRef(null);
+  const handleAddRequest = () => {
+    setReqModOpen(true);
+  };
 
   const handleAddUser = () => {
- 
     setErrorMessage("");
     setpopupContent(true);
     setIsOpen(true);
   };
   const handleShowUsers = () => {
-  
     setErrorMessage("");
     setpopupContent(false);
     setIsOpen(true);
@@ -51,33 +55,39 @@ const ButtonsPanel = ({ user }) => {
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-  
+
   return (
     <Container>
       <Grid container>
         <Grid item lg={12} className={classes.ButtonsPanel}>
           <div className={classes.arrangeButton}>
-           {user.userInfo.department === 'Admin' && <ButtonGroup
-              variant="contained"
-              color="primary"
-              ref={anchorRef}
-              aria-label="split button"
-              style = {{marginRight : '20px'}}
-            >
-              <Button onClick={handleShowUsers} id="fff">
-                USERS
-              </Button>
-              <Button
-                size="small"
-                aria-label="select merge strategy"
-                aria-haspopup="menu"
-                onClick={handleAddUser}
-                id="hello"
+            {isAdmin === "Admin" && (
+              <ButtonGroup
+                variant="contained"
+                color="primary"
+                ref={anchorRef}
+                aria-label="split button"
+                style = {{marginRight : '20px'}}
               >
-                <Add />
-              </Button>
-            </ButtonGroup> }
-            <Button color="primary" variant="contained">
+                <Button onClick={handleShowUsers} id="usersButton">
+                  USERS
+                </Button>
+                <Button
+                  size="small"
+                  aria-label="select merge strategy"
+                  aria-haspopup="menu"
+                  onClick={handleAddUser}
+                  id="addUserButton"
+                >
+                  <Add />
+                </Button>
+              </ButtonGroup>
+            )}
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleAddRequest}
+            >
               <Add /> Add New request
             </Button>
           </div>
@@ -89,9 +99,20 @@ const ButtonsPanel = ({ user }) => {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
-        <Alert 
-        severity="success">{displaySnackbarText}</Alert>
+        <Alert severity="success">{displaySnackbarText}</Alert>
       </Snackbar>
+      <ModalPop
+        isOpen={reqModOpen}
+        handleClose={handleDialogClose}
+        title={"Add New Request"}
+        errorMessage={errorMessage}
+        width={"lg"}
+        content={<AddRequest 
+          setShowSnackbar={setShowSnackbar}
+          setDisplaySnackbarText={setDisplaySnackbarText}
+          handleDialogClose={handleDialogClose} 
+          user={user} />}
+      ></ModalPop>
       <ModalPop
         isOpen={isOpen}
         handleClose={handleDialogClose}
@@ -108,11 +129,11 @@ const ButtonsPanel = ({ user }) => {
             />
           ) : (
             <>
-              {userData.map((u_data,index) => (
+              {userData.map((u_data, index) => (
                 <ViewDeleteUser
                   key={index}
                   setShowSnackbar={setShowSnackbar}
-                  setDisplaySnackbarText={setDisplaySnackbarText}       
+                  setDisplaySnackbarText={setDisplaySnackbarText}
                   setErrorMessage={setErrorMessage}
                   firstName={u_data.name}
                   username={u_data.username}

@@ -22,5 +22,10 @@ export default makeStyles((theme) => ({
         '&:hover':{
           color: '#c50000',
         }
+      },
+      buttonStyle:{
+        paddingTop:'0px !important',
+        display: "flex",
+        justifyContent: "flex-end",
       }
 }));

@@ -13,6 +13,7 @@ import Alert from "@material-ui/lab/Alert";
 const ModalPop = ({
   isOpen,
   handleClose,
+  width,
   title,
   content,
   errorMessage,
@@ -23,6 +24,7 @@ const ModalPop = ({
     <Dialog
       open={isOpen}
       onClose={handleClose}
+      maxWidth={width}
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
       fullWidth
