@@ -10,14 +10,15 @@ import moment from "moment";
 import ModalPop from "../Modal/ModalPop";
 import Content from "./Contents";
 import RenderCellItem from "./RenderCellItem";
+import useStyles from './masterTableStyles';
 
 const MasterTable = (props) => {
   const state = useSelector((state) => state);
   const serviceRequestList = _.get(state, "serviceRequest.serviceRequests", []);
   const [editModal, setEditModal] = useState(false);
   const [contentDetail, setContentDetail] = useState({});
-
-  const updateField = (serviceRequestId, detailsId, field, headerName, id, status) => {
+  const classes = useStyles();
+  const updateField = (serviceRequestId, detailsId, field, headerName, id, status, right) => {
     setEditModal(true);
     if (id === "update") {
       setContentDetail({
@@ -61,8 +62,10 @@ const MasterTable = (props) => {
           icon={<Create style={{ fontSize: "1rem" }} />}
           params={params}
           id="update"
+          right = '0'
         />
       ),
+      cellClassName: 'cellWithBtn',
     },
     {
       field: "comments",
@@ -75,15 +78,18 @@ const MasterTable = (props) => {
             icon={<Add style={{ fontSize: "1rem" }} />}
             params={params}
             id="update"
+            right = '0'
           />
           <RenderCellItem
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
             id="view"
+            right = '1.5rem'
           />
         </>
       ),
+      cellClassName: 'cellWithBtn',
     },
     {
       field: "requesterUpdate",
@@ -96,15 +102,18 @@ const MasterTable = (props) => {
             icon={<Add style={{ fontSize: "1rem" }} />}
             params={params}
             id="update"
+            right="0"
           />
           <RenderCellItem
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
             id="view"
+            right="1.5rem"
           />
         </>
       ),
+      cellClassName: 'cellWithBtn',
     },
     {
       field: "poNo",
@@ -116,8 +125,10 @@ const MasterTable = (props) => {
           icon={<Add style={{ fontSize: "1rem" }} />}
           params={params}
           id="update"
+          right="0"
         />
       ),
+      cellClassName: 'cellWithBtn',
     },
     {
       field: "vendorName",
@@ -129,8 +140,10 @@ const MasterTable = (props) => {
           icon={<Add style={{ fontSize: "1rem" }} />}
           params={params}
           id="update"
+          right="0"
         />
       ),
+      cellClassName: 'cellWithBtn',
     },
     {
       field: "vendorNo",
@@ -142,8 +155,10 @@ const MasterTable = (props) => {
           icon={<Add style={{ fontSize: "1rem" }} />}
           params={params}
           id="update"
+          right="0"
         />
       ),
+      cellClassName: 'cellWithBtn',
     },
   ];
 
@@ -179,7 +194,7 @@ const MasterTable = (props) => {
   };
 
   return (
-    <div style={{ height: 725, width: "100%", marginTop: "1rem" }}>
+    <div style={{ height: 725, width: "100%", marginTop: "1rem" }} className={classes.root}>
       <DataGrid
         rows={tableData}
         columns={columns}

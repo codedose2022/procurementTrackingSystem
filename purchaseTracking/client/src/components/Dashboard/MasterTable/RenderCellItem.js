@@ -9,7 +9,7 @@ const RenderCellItem = (props) => {
         variant="contained"
         color="secondary"
         size="small"
-        style={{ marginLeft: 8, "&:hover": { color: "blue" } }}
+        style={{ position: 'absolute', right: props.right, }}
         onClick={(e) =>
           props.updateField(
             props.params.row.requestId,

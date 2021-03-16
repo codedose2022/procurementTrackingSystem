@@ -1,6 +1,17 @@
-import { Grid, Avatar, Typography, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  Avatar,
+  Typography,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button
+} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import React from "react";
+import React, {useState} from "react";
 import { useDispatch } from "react-redux";
 import useStyles from "./FormStyles";
 import { deleteUser } from "../../../Actions/adminActions";
@@ -19,6 +30,7 @@ const ViewDeleteUser = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleUserDelete = () => {
+    setOpen(false);
     setErrorMessage("");
     dispatch(
       deleteUser(
@@ -29,6 +41,16 @@ const ViewDeleteUser = ({
         setDisplaySnackbarText
       )
     );
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    setOpen(true);
   };
 
   return (
@@ -48,13 +70,29 @@ const ViewDeleteUser = ({
           <IconButton
             className={classes.deleteUser}
             size="small"
-            onClick={handleUserDelete}
+            onClick={handleConfirmDelete}
           >
             <Delete />
           </IconButton>
         </Grid>
       </Grid>
       <hr />
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle style={{borderBottom: '1px solid #ddd'}}>Confirm</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={handleUserDelete} color="primary" autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
