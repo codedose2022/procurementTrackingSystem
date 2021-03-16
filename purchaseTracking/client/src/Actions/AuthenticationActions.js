@@ -1,8 +1,6 @@
 import _ from "lodash";
 import * as api from "../api";
 import responseStatusConstants from "../Constants/responseStatusCode";
-import { getUsers } from "../Actions/adminActions";
-
 export const login = (loginData, callback, history) => async (dispatch) => {
   try {
     const { data } = await api.login(loginData);
@@ -11,7 +9,6 @@ export const login = (loginData, callback, history) => async (dispatch) => {
       localStorage.setItem("auth-token", data.token);
       dispatch({ type: "USER_INFO", payload: data });
       dispatch({ type: "LOGIN", payload: true });
-      dispatch(getUsers(data.token));
       history.push("/dashboard");
     } else {
       callback(_.get(data, "message", ""));

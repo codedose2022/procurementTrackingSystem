@@ -9,6 +9,7 @@ import MasterTable from "./MasterTable/MasterTable";
 import { isTokenValid } from "../../api/index";
 import { useHistory } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { getUsers } from "../../Actions/adminActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -42,6 +43,9 @@ const Dashboard = (props) => {
               setServiceErrors
             )
           );
+          if (props.user.userInfo.department === "Admin") {
+            dispatch(getUsers(props.user.token));
+          }
           setIsLoading(false);
         }
       } catch (error) {
@@ -55,7 +59,7 @@ const Dashboard = (props) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        {serviceErrors && <Alert severity='error'> {serviceErrors} </Alert>}
+        {serviceErrors && <Alert severity="error"> {serviceErrors} </Alert>}
         {!serviceErrors && isLoading ? (
           <CircularProgress
             style={{ position: "absolute", left: "50%", top: "50%" }}

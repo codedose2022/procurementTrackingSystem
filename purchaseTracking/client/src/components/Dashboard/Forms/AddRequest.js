@@ -42,7 +42,8 @@ const AddRequest = (props) => {
           setServiceErrors,
           props.handleDialogClose,
           props.setShowSnackbar,
-          props.setDisplaySnackbarText
+          props.setDisplaySnackbarText,
+          props.user.userInfo._id
         )
       );
     }

@@ -24,14 +24,14 @@ export const createServiceRequests = (
   errCallback,
   handleDialogClose,
   setShowSnackbar,
-  setDisplaySnackbarText
+  setDisplaySnackbarText,
+  userId
 ) => async (dispatch) => {
   try {
     const { data } = await api.createServiceRequests(serviceData, token);
     const successStatusCd = _.get(data, "status", "");
-    console.log(successStatusCd);
     if (successStatusCd === responseStatusConstants.SUCCESS) {
-      dispatch({ type: "ALL_REQUESTS", payload: data.serviceRequestsList });
+      dispatch(getAllServiceRequests(userId,token));
       setShowSnackbar(true);
       setDisplaySnackbarText(_.get(data, "message", ""));
       handleDialogClose();
