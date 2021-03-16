@@ -57,6 +57,9 @@ const MainNav = (props) => {
     localStorage.setItem("master_class", "");
     history.push("/");
   };
+  const handleChangePassword = () => {
+    history.push("/changePassword");
+  };
 
   return (
       <AppBar className={classes.main}>
@@ -96,7 +99,7 @@ const MainNav = (props) => {
                 <div className={classes.popoverContent}>
                   <Typography variant="body2">{props.user.userInfo.username}</Typography>
                   <Typography className={classes.footText} variant="body2">
-                    <Link className={classes.customLink} color="primary"> Change password </Link>
+                    <Link className={classes.customLink} color="primary" onClick = {handleChangePassword}> Change password </Link>
                   </Typography>
                 </div>
                 <div className={classes.popoverButton}>

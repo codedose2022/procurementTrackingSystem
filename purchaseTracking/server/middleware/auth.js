@@ -7,7 +7,7 @@ export default function auth(req, res, next) {
       return res
         .status(401)
         .json({ msg: "No authentication token, authorization denied." });
-
+   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified)
       return res
@@ -15,6 +15,12 @@ export default function auth(req, res, next) {
         .json({ msg: "Token verification failed, authorization denied." });
     req.id = verified.id;
     next();
+   } catch (error) {
+    return res
+    .status(401)
+    .json({ msg: "Token verification failed, authorization denied." });
+   }
+    
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

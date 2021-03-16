@@ -6,13 +6,17 @@ export const sendResetLink = (username) =>
 export const resetPassword = (pwd) => axios.post(`auth/resetPassword`, pwd);
 export const isTokenValid = (token) =>
   axios.post(`auth/isTokenValid`, null, { headers: { "x-auth-token": token } });
+export const changePassword = (changePasswordData, token) =>
+  axios.post(`auth/changePassword`, changePasswordData, {
+    headers: { "x-auth-token": token },
+  });
 
-export const getServiceRequests = (userId,token ) =>
+export const getServiceRequests = (userId, token) =>
   axios.post(`serviceRequests/getServiceRequests`, userId, {
     headers: { "x-auth-token": token },
   });
 
-  export const getUsers = (token) =>
+export const getUsers = (token) =>
   axios.post(`adminActions/getUsers`, null, {
     headers: { "x-auth-token": token },
   });

@@ -21,16 +21,36 @@ export const login = (loginData, callback, history) => async (dispatch) => {
   }
 };
 
-export const sendResetLink = (username, errCallback, successCallBack) => async (dispatch) => {
+export const sendResetLink = (username, errCallback, successCallBack) => async (
+  dispatch
+) => {
   try {
     const { data } = await api.sendResetLink({ username: username });
     if (data.status === responseStatusConstants.INVALID_EMAIL) {
-      errCallback(data.message)
-    }
-    else{
-      successCallBack(data.message)
+      errCallback(data.message);
+    } else {
+      successCallBack(data.message);
     }
   } catch (error) {
     errCallback("Please try again later");
+  }
+};
+
+export const changePassword = (
+  changePasswordData,
+  callback,
+  history,
+  token
+) => async (dispatch) => {
+  try {
+    const { data } = await api.changePassword(changePasswordData, token);
+    const status = _.get(data, "status", "");
+    if (status === responseStatusConstants.SUCCESS) {
+      history.push("/dashboard");
+    } else {
+      callback(_.get(data, "message", ""));
+    }
+  } catch (error) {
+    callback("Please try again later");
   }
 };

@@ -57,7 +57,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    setServiceErrors('')
+    setServiceErrors('');
     if (!forgotPassword) {
       if (
         validateField("password", loginData.password) === "" &&
