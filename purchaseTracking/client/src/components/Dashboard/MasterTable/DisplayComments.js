@@ -35,7 +35,7 @@ export default function DisplayComments(props) {
         })}
         {!commentsList.length && (
           <>
-              <Report />&nbsp;
+              <Report style={{color: '#c50000'}}/>&nbsp;
               <Typography>There is nothing here. Please check back later
           </Typography>
           </>
