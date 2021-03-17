@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
-import { IconButton } from "@material-ui/core";
+import { Tooltip } from "@material-ui/core";
 import Create from "@material-ui/icons/Create";
 import Add from "@material-ui/icons/Add";
 import Description from "@material-ui/icons/Description";
@@ -13,6 +13,7 @@ import RenderCellItem from "./RenderCellItem";
 import useStyles from "./masterTableStyles";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import { formatListItem, isAdminOrPr } from "../../../Helpers/validationHelper";
 
 const MasterTable = (props) => {
   const state = useSelector((state) => state);
@@ -62,21 +63,35 @@ const MasterTable = (props) => {
     },
     { field: "crRep", headerName: "CR Rep.", width: 120 },
     { field: "enqRefNo", headerName: "Enq Ref No.", width: 160 },
-    { field: "type", headerName: "Type", width: 170 },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 170,
+      renderCell: (params) => (
+        <>
+          <Tooltip title={params.value} aria-label="display tooltip">
+            <span>{params.value}</span>
+          </Tooltip>
+        </>
+      ),
+    },
+
     {
       field: "status",
       headerName: "Status",
       width: 200,
       renderCell: (params) => (
         <>
-        {params.value}
-        <RenderCellItem
-          updateField={updateField}
-          icon={<Create style={{ fontSize: "1rem" }} />}
-          params={params}
-          id='update'
-          right='0'
-        />
+          {params.value}
+          {isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Create style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
         </>
       ),
       cellClassName: "cellWithBtn",
@@ -87,20 +102,23 @@ const MasterTable = (props) => {
       width: 200,
       renderCell: (params) => (
         <>
-         {params.value}
-          <RenderCellItem
-            updateField={updateField}
-            icon={<Add style={{ fontSize: "1rem" }} />}
-            params={params}
-            id='update'
-            right='0'
-          />
+          {params.value}
+          {isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
+
           <RenderCellItem
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
-            id='view'
-            right='1.5rem'
+            id="view"
+            right="1.5rem"
           />
         </>
       ),
@@ -109,23 +127,26 @@ const MasterTable = (props) => {
     {
       field: "reply",
       headerName: "Requester update",
-      width: 170,
+      width: 200,
       renderCell: (params) => (
         <>
-            {params.value}
-          <RenderCellItem
-            updateField={updateField}
-            icon={<Add style={{ fontSize: "1rem" }} />}
-            params={params}
-            id='update'
-            right='0'
-          />
+          {params.value}
+          {!isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
+
           <RenderCellItem
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
-            id='view'
-            right='1.5rem'
+            id="view"
+            right="1.5rem"
           />
         </>
       ),
@@ -136,15 +157,17 @@ const MasterTable = (props) => {
       headerName: "P.O No.",
       width: 110,
       renderCell: (params) => (
-        <>    
-        {params.value}
-        <RenderCellItem
-          updateField={updateField}
-          icon={<Add style={{ fontSize: "1rem" }} />}
-          params={params}
-          id='update'
-          right='0'
-        />
+        <>
+          {params.value}
+          {isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
         </>
       ),
       cellClassName: "cellWithBtn",
@@ -154,15 +177,17 @@ const MasterTable = (props) => {
       headerName: "Vendor Name",
       width: 150,
       renderCell: (params) => (
-        <>    
-        {params.value}
-        <RenderCellItem
-          updateField={updateField}
-          icon={<Add style={{ fontSize: "1rem" }} />}
-          params={params}
-          id='update'
-          right='0'
-        />
+        <>
+          {params.value}
+          {isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
         </>
       ),
       cellClassName: "cellWithBtn",
@@ -172,22 +197,24 @@ const MasterTable = (props) => {
       headerName: "Vendor No.",
       width: 150,
       renderCell: (params) => (
-        <>    
-        {params.value}
-        <RenderCellItem
-          updateField={updateField}
-          icon={<Add style={{ fontSize: "1rem" }} />}
-          params={params}
-          id='update'
-          right='0'
-        />
+        <>
+          {params.value}
+          {isAdminOrPr(props.user.userInfo.department) && (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
         </>
       ),
       cellClassName: "cellWithBtn",
     },
   ];
   function Alert(props) {
-    return <MuiAlert elevation={6} variant='filled' {...props} />;
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
   let tableData = [];
@@ -204,8 +231,8 @@ const MasterTable = (props) => {
             : request.refNum,
         type: detail.serviceCategory,
         status: detail.status,
-        comments: detail.comments.length ? detail.comments[detail.comments.length-1].comments : '',
-        reply:detail.reply.length ? detail.reply[detail.reply.length-1].reply : '',
+        comments: formatListItem(detail.comments, "comments"),
+        reply: formatListItem(detail.reply, "reply"),
         poNumber: detail.poNumber,
         vendorName: detail.vendorName,
         vendorNumber: detail.vendorNumber,
@@ -239,7 +266,7 @@ const MasterTable = (props) => {
           autoHideDuration={6000}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
-          <Alert severity='success'>Updated successfully</Alert>
+          <Alert severity="success">Updated successfully</Alert>
         </Snackbar>
       )}
       <DataGrid
@@ -248,7 +275,7 @@ const MasterTable = (props) => {
         components={{
           Toolbar: GridToolbar,
         }}
-        density='compact'
+        density="compact"
         disableSelectionOnClick
       />
       {editModal && (
