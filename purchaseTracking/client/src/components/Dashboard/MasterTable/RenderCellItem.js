@@ -4,7 +4,7 @@ import { IconButton } from "@material-ui/core";
 const RenderCellItem = (props) => {
   return (
     <>
-      {props.params.value}
+     
       <IconButton
         variant="contained"
         color="secondary"

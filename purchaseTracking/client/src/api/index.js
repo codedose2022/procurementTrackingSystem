@@ -19,7 +19,19 @@ export const createServiceRequests = (serviceData, token) =>
   axios.post(`serviceRequests/createServiceRequests`, serviceData, {
     headers: { "x-auth-token": token },
   });
-
+export const updateServiceRequests = (
+  reqData,
+  token,
+  serviceRequestId,
+  detailsId
+) =>
+  axios.post(`serviceRequests/updateServiceRequests`, reqData, {
+    headers: {
+      "x-auth-token": token,
+      detailsId: detailsId,
+      serviceRequestId: serviceRequestId,
+    },
+  });
 export const getUsers = (token) =>
   axios.post(`adminActions/getUsers`, null, {
     headers: { "x-auth-token": token },

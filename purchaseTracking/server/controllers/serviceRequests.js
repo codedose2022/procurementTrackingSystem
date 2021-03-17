@@ -16,7 +16,7 @@ export const getServiceRequests = async (req, res) => {
   try {
     let serviceRequestsList = [];
     const user = await Users.findOne({ _id: req.body.userId });
-    if ([constants.ADMIN,constants.PR].includes(user.department)) {
+    if ([constants.ADMIN, constants.PR].includes(user.department)) {
       serviceRequestsList = await ServiceRequests.find().sort({
         createdAt: -1,
       });
@@ -60,12 +60,10 @@ export const createServiceRequests = async (req, res) => {
     };
     const newReq = new ServiceRequests(serviceObj);
     await newReq.save();
-    const serviceRequestsList = await ServiceRequests.find().sort({
-      createdAt: -1,
-    });
+   
     responseData.message = responseMessageConstants.SERVICE_REQUEST_CREATED;
     responseData.status = responseStatusConstants.SUCCESS;
-    responseData.serviceRequestsList = serviceRequestsList;
+    
     return res.status(200).send(responseData);
   } catch (error) {
     responseData.message = error.message;
@@ -96,6 +94,7 @@ export const updateServiceRequests = async (req, res) => {
           responseData.message =
             responseMessageConstants.COMMENTS_ADDED_SUCCESS;
           responseData.status = responseStatusConstants.SUCCESS;
+          return res.status(200).json(responseData);
         }
       });
     } else {
@@ -109,12 +108,10 @@ export const updateServiceRequests = async (req, res) => {
           responseData.message =
             responseMessageConstants.SERVICE_REQUEST_UPDATED;
           responseData.status = responseStatusConstants.SUCCESS;
+          return res.status(200).json(responseData);
         }
       });
     }
-    const serviceRequestsList = await ServiceRequests.find();
-    responseData.serviceRequestsList = serviceRequestsList;
-    return res.status(200).json(responseData);
   } catch (error) {
     responseData.status = responseStatusConstants.FAILURE;
     responseData.message = responseMessageConstants.INVALID_ID;

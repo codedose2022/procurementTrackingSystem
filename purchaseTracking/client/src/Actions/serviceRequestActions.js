@@ -43,3 +43,29 @@ export const createServiceRequests = (
     errCallback("Please try again later");
   }
 };
+
+export const updateServiceRequests = (
+  reqData,
+  token,
+  serviceRequestId,
+  detailsId,
+  userId,
+  errCallback
+) => async (dispatch) => {
+  try {
+    const { data } = await api.updateServiceRequests(
+      reqData,
+      token,
+      serviceRequestId,
+      detailsId,
+    );
+    const successStatusCd = _.get(data, "status", "");
+    if (successStatusCd === responseStatusConstants.SUCCESS) {
+      dispatch(getAllServiceRequests(userId, token));
+    } else {
+      errCallback(_.get(data, "message", ""));
+    }
+  } catch (error) {
+    errCallback("Please try again later");
+  }
+};
