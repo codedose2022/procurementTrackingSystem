@@ -94,7 +94,7 @@ const AddUser = (props) => {
             </div>
           </FormControl>
 
-          <FormControl className={classes.formControl} fullWidth>
+          <FormControl className={classes.formControlButton} >
             <Button variant="contained" color="primary" type="submit">
               Submit
             </Button>

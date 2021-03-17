@@ -225,50 +225,50 @@ const ChangePassword = (props) => {
                       ),
                     }}
                   />
-
-                  <TextField
-                    id="password"
-                    placeholder="Enter your password"
-                    name="confirmPassword"
-                    size="small"
-                    label="Confirm Password"
-                    FormHelperTextProps={{
-                      className: classes.helperTextError,
-                    }}
-                    type="password"
-                    fullWidth
-                    value={changePasswordData.confirmPassword}
-                    helperText={
-                      touched &&
-                      validateField(
-                        "password",
-                        changePasswordData.confirmPassword
-                      )
-                    }
-                    onChange={(e) =>
-                      setChangePasswordData({
-                        ...changePasswordData,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                    type={showConfirmPassword ? "text" : "password"}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleShowConfirmPassword}
-                          >
-                            {showConfirmPassword ? (
-                              <Visibility />
-                            ) : (
-                              <VisibilityOff />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+                    <TextField
+                      id="password"
+                      placeholder="Enter your password"
+                      name="confirmPassword"
+                      size="small"
+                      label="Confirm Password"
+                      FormHelperTextProps={{
+                        className: classes.helperTextError,
+                      }}
+                      type="password"
+                      fullWidth
+                      value={changePasswordData.confirmPassword}
+                      helperText={
+                        touched &&
+                        validateField(
+                          "password",
+                          changePasswordData.confirmPassword
+                        )
+                      }
+                      onChange={(e) =>
+                        setChangePasswordData({
+                          ...changePasswordData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      type={showConfirmPassword ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleShowConfirmPassword}
+                            >
+                              {showConfirmPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                   
                 </>
 
                 <Button

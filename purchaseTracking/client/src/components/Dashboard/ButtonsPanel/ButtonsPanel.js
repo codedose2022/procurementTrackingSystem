@@ -118,6 +118,7 @@ const ButtonsPanel = ({ user }) => {
         isOpen={isOpen}
         handleClose={handleDialogClose}
         title={popupContent ? "Add new user" : "Users"}
+        width={popupContent ? "xs" : "sm"}
         errorMessage={errorMessage}
         content={
           popupContent ? (

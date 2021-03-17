@@ -109,7 +109,7 @@ const MainNav = (props) => {
                     onClick={handleChangePassword}
                   >
                     {" "}
-                    Change password{" "}
+                    Change Password{" "}
                   </Link>
                 </Typography>
               </div>
