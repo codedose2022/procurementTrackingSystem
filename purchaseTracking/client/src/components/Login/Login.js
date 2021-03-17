@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -21,7 +21,6 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { validateField } from "../../Helpers/validationHelper";
 import { login, sendResetLink } from "../../Actions/AuthenticationActions";
-
 
 const theme = createMuiTheme({
   palette: {
@@ -47,9 +46,17 @@ const Login = () => {
   const [serviceErrors, setServiceErrors] = useState("");
   const [resetSuccessMsg, setResetSuccessMsg] = useState("");
   const [touched, setTouched] = useState(false);
+  useEffect(() => {
+    if (window.location.pathname == "/") {
+      localStorage.setItem("auth-token", "");
+      dispatch({ type: "RESET_STORE" });
+      localStorage.setItem("master_class", "");
+    }
+  }, []);
+
   const handleForgotPassword = () => {
-    setServiceErrors('');
-    setResetSuccessMsg('');
+    setServiceErrors("");
+    setResetSuccessMsg("");
     setForgotPassword(!forgotPassword);
   };
   const handleShowPassword = () => {
@@ -58,8 +65,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    setServiceErrors('');
-    setResetSuccessMsg('');
+    setServiceErrors("");
+    setResetSuccessMsg("");
     if (!forgotPassword) {
       if (
         validateField("password", loginData.password) === "" &&
@@ -69,7 +76,13 @@ const Login = () => {
       }
     } else {
       if (validateField("username", loginData.username) === "") {
-        dispatch(sendResetLink(loginData.username, setServiceErrors, setResetSuccessMsg));
+        dispatch(
+          sendResetLink(
+            loginData.username,
+            setServiceErrors,
+            setResetSuccessMsg
+          )
+        );
       }
     }
   };
@@ -81,36 +94,35 @@ const Login = () => {
           <Card className={classes.customCard} elevation={5}>
             <CardContent>
               <div className={`${classes.logo} ${classes.loginCardHeader}`}>
-                <img src={logo} alt='company logo' />
-                <Typography variant='h5'>
+                <img src={logo} alt="company logo" />
+                <Typography variant="h5">
                   {forgotPassword ? "Reset password" : "Login"}
                 </Typography>
               </div>
               <form
                 className={classes.LoginForm}
-                autoComplete='off'
+                autoComplete="off"
                 onSubmit={handleSubmit}
               >
-                { serviceErrors && (
-                  <Alert severity='error'> {serviceErrors} </Alert>
+                {serviceErrors && (
+                  <Alert severity="error"> {serviceErrors} </Alert>
                 )}
-                {
-                  forgotPassword && resetSuccessMsg && 
-                  <Alert severity='success'> {resetSuccessMsg} </Alert>
-                }
+                {forgotPassword && resetSuccessMsg && (
+                  <Alert severity="success"> {resetSuccessMsg} </Alert>
+                )}
                 {!forgotPassword && (
                   <>
                     <TextField
-                      id='username'
-                      placeholder='Enter your username'
-                      name='username'
-                      size='small'
-                      label='Username'
+                      id="username"
+                      placeholder="Enter your username"
+                      name="username"
+                      size="small"
+                      label="Username"
                       FormHelperTextProps={{
                         className: classes.helperTextError,
                       }}
                       fullWidth
-                      type='text'
+                      type="text"
                       value={loginData.username}
                       helperText={
                         touched && validateField("username", loginData.username)
@@ -122,63 +134,60 @@ const Login = () => {
                         })
                       }
                     />
-                 
-                      <TextField
-                        id='password'
-                        placeholder='Enter your password'
-                        name='password'
-                        size='small'
-                        label='Password'
-                        FormHelperTextProps={{
-                          className: classes.helperTextError,
-                        }}
-                        fullWidth
-                        value={loginData.password}
-                        helperText={
-                          touched &&
-                          validateField("password", loginData.password)
-                        }
-                        onChange={(e) =>
-                          setLoginData({
-                            ...loginData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                        type={showPassword ? "text" : "password"}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleShowPassword}
-                              >
-                                {showPassword ? (
-                                  <Visibility />
-                                ) : (
-                                  <VisibilityOff />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                     
-                   
+
+                    <TextField
+                      id="password"
+                      placeholder="Enter your password"
+                      name="password"
+                      size="small"
+                      label="Password"
+                      FormHelperTextProps={{
+                        className: classes.helperTextError,
+                      }}
+                      fullWidth
+                      value={loginData.password}
+                      helperText={
+                        touched && validateField("password", loginData.password)
+                      }
+                      onChange={(e) =>
+                        setLoginData({
+                          ...loginData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      type={showPassword ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleShowPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
                   </>
                 )}
                 {forgotPassword && (
                   <>
                     <TextField
-                      id='email'
-                      placeholder='Enter your email'
-                      name='username'
-                      size='small'
-                      label='Email'
+                      id="email"
+                      placeholder="Enter your email"
+                      name="username"
+                      size="small"
+                      label="Email"
                       FormHelperTextProps={{
                         className: classes.helperTextError,
                       }}
                       fullWidth
-                      type='text'
+                      type="text"
                       helperText={
                         touched && validateField("username", loginData.username)
                       }
@@ -193,15 +202,15 @@ const Login = () => {
                   </>
                 )}
                 <Button
-                  variant='contained'
-                  color='primary'
+                  variant="contained"
+                  color="primary"
                   fullWidth
                   className={classes.customBtn}
-                  type='submit'
+                  type="submit"
                 >
                   {forgotPassword ? "Get reset link" : "Login"}
                 </Button>
-                <Typography className={classes.footText} variant='body1'>
+                <Typography className={classes.footText} variant="body1">
                   <Link className={classes.Link} onClick={handleForgotPassword}>
                     {forgotPassword ? "Login" : "Forgot Password"}
                   </Link>
