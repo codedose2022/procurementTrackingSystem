@@ -2,13 +2,13 @@ import _ from "lodash";
 import * as api from "../api";
 import responseStatusConstants from "../Constants/responseStatusCode";
 
-export const getUsers = (token) => async (dispatch) => {
+export const getUsers = (token,errCallback) => async (dispatch) => {
   try {
     const { data } = await api.getUsers(token);
     const usersList = _.get(data, "users", []);
     dispatch({ type: "USERS_LIST", payload: usersList });
   } catch (error) {
-    console.log("Error");
+    errCallback("Something went wrong, Please try again later.");
   }
 };
 

@@ -33,6 +33,25 @@ export const sendResetLink = (username, errCallback, successCallBack) => async (
   }
 };
 
+export const resetPassword = (
+  changePasswordData,
+  callback,
+  history,
+) => async (dispatch) => {
+  try {
+    const { data } = await api.resetPassword(changePasswordData);
+    const status = _.get(data, "status", "");
+    if (status === responseStatusConstants.SUCCESS) {
+      history.push("/");
+    } else {
+      callback(_.get(data, "message", ""));
+    }
+  } catch (error) {
+    callback("Please try again later");
+  }
+};
+
+
 export const changePassword = (
   changePasswordData,
   callback,

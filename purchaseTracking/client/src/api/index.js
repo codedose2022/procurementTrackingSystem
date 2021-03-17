@@ -3,7 +3,8 @@ import axios from "axios";
 export const login = (loginData) => axios.post(`auth/login`, loginData);
 export const sendResetLink = (username) =>
   axios.post(`auth/sendResetLink`, username);
-export const resetPassword = (pwd) => axios.post(`auth/resetPassword`, pwd);
+export const resetPassword = (resetPwdData) =>
+  axios.post(`/auth/resetPassword`, resetPwdData);
 export const isTokenValid = (token) =>
   axios.post(`auth/isTokenValid`, null, { headers: { "x-auth-token": token } });
 export const changePassword = (changePasswordData, token) =>

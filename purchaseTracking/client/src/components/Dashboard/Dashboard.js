@@ -44,7 +44,7 @@ const Dashboard = (props) => {
             )
           );
           if (props.user.userInfo.department === "Admin") {
-            dispatch(getUsers(props.user.token));
+            dispatch(getUsers(props.user.token,setServiceErrors));
           }
           setIsLoading(false);
         }

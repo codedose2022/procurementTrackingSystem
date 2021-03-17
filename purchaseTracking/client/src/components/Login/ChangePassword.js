@@ -18,8 +18,9 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { validateField } from "../../Helpers/validationHelper";
 import Alert from "@material-ui/lab/Alert";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { changePassword } from "../../Actions/AuthenticationActions";
+import { resetPassword } from "../../Actions/AuthenticationActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -36,18 +37,20 @@ const ChangePassword = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { key } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const [touched, setTouched] = useState(false);
   const [serviceErrors, setServiceErrors] = useState("");
   const [changePasswordData, setChangePasswordData] = useState({
-    username: props.user.userInfo.username,
+    username: props.user ? props.user.userInfo.username : "",
     password: "",
     newPassword: "",
     confirmPassword: "",
+    key: key ? key : "",
   });
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push("/dashboard")
+    history.push("/dashboard");
   };
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -55,13 +58,30 @@ const ChangePassword = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(true);
-    setServiceErrors('');
-    if (
-      validateField("password", changePasswordData.password) === "" &&
-      validateField("password", changePasswordData.newPassword) === "" &&
-      validateField("password", changePasswordData.confirmPassword) === ""
-    ) {
-      dispatch(changePassword(changePasswordData, setServiceErrors, history,props.user.token));
+    setServiceErrors("");
+    if (props.changePassword) {
+      if (
+        validateField("password", changePasswordData.password) === "" &&
+        validateField("password", changePasswordData.newPassword) === "" &&
+        validateField("password", changePasswordData.confirmPassword) === ""
+      ) {
+        dispatch(
+          changePassword(
+            changePasswordData,
+            setServiceErrors,
+            history,
+            props.user.token
+          )
+        );
+      }
+    }
+    if (!props.changePassword) {
+      if (
+        validateField("password", changePasswordData.newPassword) === "" &&
+        validateField("password", changePasswordData.confirmPassword) === ""
+      ) {
+        dispatch(resetPassword(changePasswordData, setServiceErrors, history));
+      }
     }
   };
 
@@ -72,59 +92,37 @@ const ChangePassword = (props) => {
           <Card className={classes.customCard} elevation={5}>
             <CardContent>
               <div className={`${classes.logo} ${classes.loginCardHeader}`}>
-                <img src={logo} alt='company logo' />
-                <Typography variant='h5'>
+                <img src={logo} alt="company logo" />
+                <Typography variant="h5">
                   {props.changePassword ? "Change password" : "Reset password"}
                 </Typography>
               </div>
               <form
                 className={classes.LoginForm}
-                autoComplete='off'
+                autoComplete="off"
                 onSubmit={handleSubmit}
               >
                 {serviceErrors && (
-                  <Alert severity='error'> {serviceErrors} </Alert>
+                  <Alert severity="error"> {serviceErrors} </Alert>
                 )}
                 <>
-                  <TextField
-                    id='username'
-                    disabled
-                    placeholder='Enter your username'
-                    name='username'
-                    size='small'
-                    label='Username'
-                    FormHelperTextProps={{
-                      className: classes.helperTextError,
-                    }}
-                    fullWidth
-                    type='text'
-                    value={changePasswordData.username}
-                    helperText={
-                      touched &&
-                      validateField("username", changePasswordData.username)
-                    }
-                    onChange={(e) =>
-                      setChangePasswordData({
-                        ...changePasswordData,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
-                  <div style={{ position: "relative" }}>
+                  {props.changePassword && (
                     <TextField
-                      id='password'
-                      placeholder='Enter your password'
-                      name='password'
-                      size='small'
-                      label='Current Password'
+                      id="username"
+                      disabled
+                      placeholder="Enter your username"
+                      name="username"
+                      size="small"
+                      label="Username"
                       FormHelperTextProps={{
                         className: classes.helperTextError,
                       }}
                       fullWidth
-                      value={changePasswordData.password}
+                      type="text"
+                      value={changePasswordData.username}
                       helperText={
                         touched &&
-                        validateField("password", changePasswordData.password)
+                        validateField("username", changePasswordData.username)
                       }
                       onChange={(e) =>
                         setChangePasswordData({
@@ -132,26 +130,52 @@ const ChangePassword = (props) => {
                           [e.target.name]: e.target.value,
                         })
                       }
-                      type={showPassword ? "text" : "password"}
                     />
-                    <IconButton
-                      size='small'
-                      className={classes.absoluteIcon}
-                      onClick={handleShowPassword}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </div>
+                  )}
+                  {props.changePassword && (
+                    <div style={{ position: "relative" }}>
+                      <TextField
+                        id="password"
+                        placeholder="Enter your password"
+                        name="password"
+                        size="small"
+                        label="Current Password"
+                        FormHelperTextProps={{
+                          className: classes.helperTextError,
+                        }}
+                        fullWidth
+                        value={changePasswordData.password}
+                        helperText={
+                          touched &&
+                          validateField("password", changePasswordData.password)
+                        }
+                        onChange={(e) =>
+                          setChangePasswordData({
+                            ...changePasswordData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                        type={showPassword ? "text" : "password"}
+                      />
+                      <IconButton
+                        size="small"
+                        className={classes.absoluteIcon}
+                        onClick={handleShowPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </div>
+                  )}
                   <TextField
-                    id='password'
-                    placeholder='Enter your password'
-                    name='newPassword'
-                    size='small'
-                    label='New Password'
+                    id="password"
+                    placeholder="Enter your password"
+                    name="newPassword"
+                    size="small"
+                    label="New Password"
                     FormHelperTextProps={{
                       className: classes.helperTextError,
                     }}
-                    type='password'
+                    type="password"
                     fullWidth
                     value={changePasswordData.newPassword}
                     helperText={
@@ -166,15 +190,15 @@ const ChangePassword = (props) => {
                     }
                   />
                   <TextField
-                    id='password'
-                    placeholder='Enter your password'
-                    name='confirmPassword'
-                    size='small'
-                    label='Confirm Password'
+                    id="password"
+                    placeholder="Enter your password"
+                    name="confirmPassword"
+                    size="small"
+                    label="Confirm Password"
                     FormHelperTextProps={{
                       className: classes.helperTextError,
                     }}
-                    type='password'
+                    type="password"
                     fullWidth
                     value={changePasswordData.confirmPassword}
                     helperText={
@@ -194,17 +218,17 @@ const ChangePassword = (props) => {
                 </>
 
                 <Button
-                  variant='contained'
-                  color='primary'
+                  variant="contained"
+                  color="primary"
                   fullWidth
-                  type='submit'
+                  type="submit"
                   className={classes.customBtn}
                 >
                   {props.changePassword ? "CHANGE PASSWORD" : "RESET PASSWORD"}
                 </Button>
-                <Typography className={classes.footText} variant='body1'>
+                <Typography className={classes.footText} variant="body1">
                   <Link className={classes.Link} onClick={handleCancel}>
-                    cancel
+                    Cancel
                   </Link>
                 </Typography>
               </form>

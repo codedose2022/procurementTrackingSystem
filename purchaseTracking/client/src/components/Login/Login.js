@@ -58,6 +58,7 @@ const Login = () => {
     e.preventDefault();
     setTouched(true);
     setServiceErrors('');
+    setResetSuccessMsg('');
     if (!forgotPassword) {
       if (
         validateField("password", loginData.password) === "" &&

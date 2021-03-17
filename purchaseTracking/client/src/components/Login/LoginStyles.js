@@ -36,6 +36,8 @@ export default makeStyles((theme) => ({
     margin: "auto",
   },
   footText: {
+    justifyContent: "center",
+    display: "flex",
     fontSize: "14px",
   },
   absoluteIcon: {
