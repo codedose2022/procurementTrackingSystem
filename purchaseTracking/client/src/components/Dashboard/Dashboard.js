@@ -54,6 +54,7 @@ const Dashboard = (props) => {
       }
     };
     loadDashboard();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (

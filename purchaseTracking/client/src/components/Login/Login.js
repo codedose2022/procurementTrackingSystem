@@ -9,6 +9,7 @@ import {
   createMuiTheme,
   ThemeProvider,
   IconButton,
+  InputAdornment,
   Link,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -121,7 +122,7 @@ const Login = () => {
                         })
                       }
                     />
-                    <div style={{ position: "relative" }}>
+                 
                       <TextField
                         id='password'
                         placeholder='Enter your password'
@@ -144,15 +145,25 @@ const Login = () => {
                           })
                         }
                         type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleShowPassword}
+                              >
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
                       />
-                      <IconButton
-                        size='small'
-                        className={classes.absoluteIcon}
-                        onClick={handleShowPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </div>
+                     
+                   
                   </>
                 )}
                 {forgotPassword && (

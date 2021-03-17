@@ -15,6 +15,7 @@ import AddUser from "../Forms/AddUser";
 import ViewDeleteUser from "../Forms/ViewDeleteUser";
 import ModalPop from "../Modal/ModalPop";
 import useStyles from "./ButtonsPanelStyles";
+import {isAdminOrPr} from '../../../Helpers/validationHelper';
 
 const ButtonsPanel = ({ user }) => {
   const classes = useStyles();
@@ -83,13 +84,13 @@ const ButtonsPanel = ({ user }) => {
                 </Button>
               </ButtonGroup>
             )}
-            <Button
+            {!isAdminOrPr(user.userInfo.department) && <Button
               color="primary"
               variant="contained"
               onClick={handleAddRequest}
             >
               <Add /> Add New request
-            </Button>
+            </Button> }
           </div>
         </Grid>
       </Grid>

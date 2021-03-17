@@ -10,6 +10,7 @@ import {
   ThemeProvider,
   IconButton,
   Link,
+  InputAdornment,
 } from "@material-ui/core";
 import logo from "../../images/mersat-logo.png";
 import { useDispatch } from "react-redux";
@@ -39,6 +40,10 @@ const ChangePassword = (props) => {
   const history = useHistory();
   const { key } = useParams();
   const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [touched, setTouched] = useState(false);
   const [serviceErrors, setServiceErrors] = useState("");
   const [changePasswordData, setChangePasswordData] = useState({
@@ -54,6 +59,12 @@ const ChangePassword = (props) => {
   };
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const handleShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,39 +144,47 @@ const ChangePassword = (props) => {
                     />
                   )}
                   {props.changePassword && (
-                    <div style={{ position: "relative" }}>
-                      <TextField
-                        id="password"
-                        placeholder="Enter your password"
-                        name="password"
-                        size="small"
-                        label="Current Password"
-                        FormHelperTextProps={{
-                          className: classes.helperTextError,
-                        }}
-                        fullWidth
-                        value={changePasswordData.password}
-                        helperText={
-                          touched &&
-                          validateField("password", changePasswordData.password)
-                        }
-                        onChange={(e) =>
-                          setChangePasswordData({
-                            ...changePasswordData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                        type={showPassword ? "text" : "password"}
-                      />
-                      <IconButton
-                        size="small"
-                        className={classes.absoluteIcon}
-                        onClick={handleShowPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </div>
+                    <TextField
+                      id="password"
+                      placeholder="Enter your password"
+                      name="password"
+                      size="small"
+                      label="Current Password"
+                      FormHelperTextProps={{
+                        className: classes.helperTextError,
+                      }}
+                      fullWidth
+                      value={changePasswordData.password}
+                      helperText={
+                        touched &&
+                        validateField("password", changePasswordData.password)
+                      }
+                      onChange={(e) =>
+                        setChangePasswordData({
+                          ...changePasswordData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      type={showPassword ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleShowPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
                   )}
+
                   <TextField
                     id="password"
                     placeholder="Enter your password"
@@ -188,7 +207,25 @@ const ChangePassword = (props) => {
                         [e.target.name]: e.target.value,
                       })
                     }
+                    type={showNewPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowNewPassword}
+                          >
+                            {showNewPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
+
                   <TextField
                     id="password"
                     placeholder="Enter your password"
@@ -214,6 +251,23 @@ const ChangePassword = (props) => {
                         [e.target.name]: e.target.value,
                       })
                     }
+                    type={showConfirmPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowConfirmPassword}
+                          >
+                            {showConfirmPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </>
 

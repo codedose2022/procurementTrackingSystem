@@ -6,6 +6,7 @@ import moment from "moment";
 
 export default function DisplayComments(props) {
   const classes = useStyle();
+ 
   const reqList = props.serviceRequestList.filter(
     (req) => req._id === props.contentDetail.serviceRequestId
   );
@@ -27,7 +28,7 @@ export default function DisplayComments(props) {
                   : comment.reply}
               </Typography>
               <Typography className={classes.smallText}>
-                {moment(comment.postedAt).format("MM/DD/YYYY HH:MM A")}
+                {moment(comment.postedAt).format("MM/DD/YYYY HH:mm")}
               </Typography>
               <hr />
             </Grid>
