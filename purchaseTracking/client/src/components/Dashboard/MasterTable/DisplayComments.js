@@ -28,7 +28,10 @@ export default function DisplayComments(props) {
                   : comment.reply}
               </Typography>
               <Typography className={classes.smallText}>
-                {moment(comment.postedAt).format("MM/DD/YYYY HH:mm")}
+              {`${moment(comment.postedAt).format("Do MMMM YYYY")}, ${moment(
+                   comment.postedAt
+                  ).format("h:mm a")}`}
+               
               </Typography>
               <hr />
             </Grid>

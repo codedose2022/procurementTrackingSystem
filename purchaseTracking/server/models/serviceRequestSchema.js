@@ -8,7 +8,7 @@ const CommentsSchema = mongoose.Schema(
     },
     postedAt:{
       type: Date,
-      default: new Date()
+      default: Date.now
     }
   },
   { timestamps: true }
@@ -20,7 +20,7 @@ const ReplySchema = mongoose.Schema(
     },
     postedAt:{
       type: Date,
-      default: new Date()
+      default: Date.now
     }
   },
   { timestamps: true }
