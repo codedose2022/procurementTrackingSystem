@@ -159,7 +159,17 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-          {isAdminOrPr(props.user.userInfo.department) && (
+         
+            { props.user.userInfo.department === 'Admin' &&  (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
+          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
@@ -179,7 +189,16 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-          {isAdminOrPr(props.user.userInfo.department) && (
+          { props.user.userInfo.department === 'Admin' &&  (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
+          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
@@ -199,7 +218,16 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-          {isAdminOrPr(props.user.userInfo.department) && (
+          { props.user.userInfo.department === 'Admin' &&  (
+            <RenderCellItem
+              updateField={updateField}
+              icon={<Add style={{ fontSize: "1rem" }} />}
+              params={params}
+              id="update"
+              right="0"
+            />
+          )}
+          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
