@@ -61,10 +61,10 @@ const ViewDeleteUser = ({
         </Grid>
         <Grid item md={4}>
           <Typography color="secondary">{firstName}</Typography>
-          <Typography className={classes.userName}>{username}</Typography>
+          <Typography color="secondary"className={classes.userName}>{username}</Typography>
         </Grid>
         <Grid item md={5}>
-          <Typography>{department}</Typography>
+          <Typography color="secondary">{department}</Typography>
         </Grid>
         <Grid item md={1}>
           <IconButton

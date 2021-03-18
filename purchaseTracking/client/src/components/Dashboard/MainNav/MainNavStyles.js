@@ -27,13 +27,13 @@ export default makeStyles((theme) => ({
     display: "flex",
     padding: "1rem",
     '& div':{
-      backgroundColor: '#443d3dd6'
+      backgroundColor: theme.palette.secondary.light
     }
   },
   popoverContent: {
     display: "flex",
     flexDirection: "column",
-    padding: "1rem",
+    padding: "1rem 1rem 1rem 0rem",
   },
   popoverButton: {
     padding: "1rem",

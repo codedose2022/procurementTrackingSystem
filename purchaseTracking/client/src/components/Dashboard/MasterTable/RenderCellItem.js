@@ -1,13 +1,15 @@
 import { IconButton } from "@material-ui/core";
 import React from "react";
+import useStyle from './masterTableStyles'
 
 const RenderCellItem = (props) => {
+  const classes = useStyle();
   return (
     <>
      
       <IconButton
         variant="contained"
-        color="secondary"
+        className={classes.icon}
         size="small"
         style={{ position: 'absolute', right: props.right, }}
         onClick={(e) =>

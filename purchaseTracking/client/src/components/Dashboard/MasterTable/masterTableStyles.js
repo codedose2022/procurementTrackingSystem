@@ -30,4 +30,7 @@ export default makeStyles((theme) => ({
   smallText: {
     fontSize: "12px",
   },
+  icon:{
+    color: theme.palette.secondary.light,
+  }
 }));
