@@ -22,7 +22,7 @@ export default function DisplayComments(props) {
         {commentsList.map((comment) => {
           return (
             <Grid item md={12} key={comment._id}>
-              <Typography>
+              <Typography color="secondary">
                 {props.decision === "comments"
                   ? comment.comments
                   : comment.reply}

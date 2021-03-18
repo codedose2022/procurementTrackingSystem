@@ -8,9 +8,6 @@ export default makeStyles((theme) => ({
   },
   LoginForm: {
     padding: "1rem",
-    "& div": {
-      margin: ".75rem 0",
-    },
     "& button": {
       margin: "1rem 0",
     },
@@ -53,5 +50,9 @@ export default makeStyles((theme) => ({
   },
   helperTextError: {
     color: "#d50000",
-  }
+  },
+  formControl: {
+    margin: "8px 0",
+    minWidth: 120,
+  },
 }));

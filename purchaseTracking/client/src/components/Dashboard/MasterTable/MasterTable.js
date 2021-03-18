@@ -289,6 +289,7 @@ const MasterTable = (props) => {
     }
     showSnackbar(false);
     showSuccessSnackbar(false);
+    props.history.push({state: {showSnackbar: false}});
   };
   return (
     <div
@@ -299,7 +300,7 @@ const MasterTable = (props) => {
         <Snackbar
           open={true}
           onClose={handleCloseSnackbar}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
           <Alert severity='success'>Updated successfully</Alert>

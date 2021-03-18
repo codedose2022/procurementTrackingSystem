@@ -17,7 +17,7 @@ const theme = createMuiTheme({
       main: "#169B71",
     },
     secondary: {
-      main: "#969696",
+      main: "#443d3dd6",
     },
   },
 });
@@ -29,6 +29,7 @@ const Dashboard = (props) => {
   const [serviceErrors, setServiceErrors] = useState("");
   const location = useLocation();
   const successSnackbar = location.state && location.state.showSnackbar;
+
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -74,7 +75,7 @@ const Dashboard = (props) => {
             <Grid container style={{ paddingTop: "80px" }}>
               <ButtonsPanel user={props.user} />
             </Grid>
-            <MasterTable user={props.user} successSnackbar = {successSnackbar} />
+            <MasterTable user={props.user} successSnackbar = {successSnackbar} history = {history}/>
           </>
         )}
       </ThemeProvider>

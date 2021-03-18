@@ -76,7 +76,7 @@ const MainNav = (props) => {
             color="secondary"
             edge="end"
           >
-            <AccountCircle />
+            <AccountCircle fontSize="large"/>
           </IconButton>
           <StyledMenu
             id="menu-appbar"
@@ -94,7 +94,7 @@ const MainNav = (props) => {
           >
             <div className={classes.menuPopover}>
               <div className={classes.popoverAvatar}>
-                <Avatar size="large">
+                <Avatar size="small">
                   {props.user.userInfo.username.charAt(0).toUpperCase()}
                 </Avatar>
               </div>

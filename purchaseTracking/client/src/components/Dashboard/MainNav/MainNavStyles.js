@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   main: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f3f3f3',
     height: "64px",
     "& div": {
       height: "64px",
@@ -26,6 +26,9 @@ export default makeStyles((theme) => ({
   popoverAvatar: {
     display: "flex",
     padding: "1rem",
+    '& div':{
+      backgroundColor: '#443d3dd6'
+    }
   },
   popoverContent: {
     display: "flex",
@@ -40,7 +43,7 @@ export default makeStyles((theme) => ({
   },
   menuPopover: {
     display: "flex",
-    alignItems: 'cennter',
+    alignItems: 'center',
   },
   customLink: {
     cursor: "pointer",

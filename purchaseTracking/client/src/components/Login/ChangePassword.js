@@ -11,6 +11,7 @@ import {
   IconButton,
   Link,
   InputAdornment,
+  FormControl,
 } from "@material-ui/core";
 import logo from "../../images/mersat-logo.png";
 import { useDispatch } from "react-redux";
@@ -118,6 +119,7 @@ const ChangePassword = (props) => {
                 )}
                 <>
                   {props.changePassword && (
+                    <FormControl className={classes.formControl} fullWidth>
                     <TextField
                       id="username"
                       disabled
@@ -142,8 +144,10 @@ const ChangePassword = (props) => {
                         })
                       }
                     />
+                    </FormControl>
                   )}
                   {props.changePassword && (
+                    <FormControl className={classes.formControl} fullWidth>
                     <TextField
                       id="password"
                       placeholder="Enter your password"
@@ -172,6 +176,7 @@ const ChangePassword = (props) => {
                             <IconButton
                               aria-label="toggle password visibility"
                               onClick={handleShowPassword}
+                              size="small"
                             >
                               {showPassword ? (
                                 <Visibility />
@@ -183,8 +188,9 @@ const ChangePassword = (props) => {
                         ),
                       }}
                     />
+                    </FormControl>
                   )}
-
+                <FormControl className={classes.formControl} fullWidth>
                   <TextField
                     id="newPassword"
                     placeholder="Enter your password"
@@ -214,6 +220,7 @@ const ChangePassword = (props) => {
                           <IconButton
                             aria-label="toggle password visibility"
                             onClick={handleShowNewPassword}
+                            size="small"
                           >
                             {showNewPassword ? (
                               <Visibility />
@@ -225,6 +232,8 @@ const ChangePassword = (props) => {
                       ),
                     }}
                   />
+                  </FormControl>
+                  <FormControl className={classes.formControl} fullWidth>
                     <TextField
                       id="confirmPassword"
                       placeholder="Enter your password"
@@ -257,6 +266,7 @@ const ChangePassword = (props) => {
                             <IconButton
                               aria-label="toggle password visibility"
                               onClick={handleShowConfirmPassword}
+                              size="small"
                             >
                               {showConfirmPassword ? (
                                 <Visibility />
@@ -268,7 +278,7 @@ const ChangePassword = (props) => {
                         ),
                       }}
                     />
-                   
+                   </FormControl>
                 </>
 
                 <Button

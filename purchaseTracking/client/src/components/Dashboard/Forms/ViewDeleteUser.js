@@ -60,7 +60,7 @@ const ViewDeleteUser = ({
           <Avatar>{avatarLetter}</Avatar>
         </Grid>
         <Grid item md={4}>
-          <Typography>{firstName}</Typography>
+          <Typography color="secondary">{firstName}</Typography>
           <Typography className={classes.userName}>{username}</Typography>
         </Grid>
         <Grid item md={5}>

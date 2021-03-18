@@ -11,6 +11,7 @@ import {
   IconButton,
   InputAdornment,
   Link,
+  FormControl,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import logo from "../../images/mersat-logo.png";
@@ -112,6 +113,7 @@ const Login = () => {
                 )}
                 {!forgotPassword && (
                   <>
+                  <FormControl className={classes.formControl} fullWidth >
                     <TextField
                       id="username"
                       placeholder="Enter your username"
@@ -134,71 +136,78 @@ const Login = () => {
                         })
                       }
                     />
-
-                    <TextField
-                      id="password"
-                      placeholder="Enter your password"
-                      name="password"
-                      size="small"
-                      label="Password"
-                      FormHelperTextProps={{
-                        className: classes.helperTextError,
-                      }}
-                      fullWidth
-                      value={loginData.password}
-                      helperText={
-                        touched && validateField("password", loginData.password)
-                      }
-                      onChange={(e) =>
-                        setLoginData({
-                          ...loginData,
-                          [e.target.name]: e.target.value,
-                        })
-                      }
-                      type={showPassword ? "text" : "password"}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleShowPassword}
-                            >
-                              {showPassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
+                    </FormControl>
+                    <FormControl className={classes.formControl} fullWidth>
+                      <TextField
+                        id="password"
+                        placeholder="Enter your password"
+                        name="password"
+                        size="small"
+                        label="Password"
+                        FormHelperTextProps={{
+                          className: classes.helperTextError,
+                        }}
+                        fullWidth
+                        value={loginData.password}
+                        helperText={
+                          touched &&
+                          validateField("password", loginData.password)
+                        }
+                        onChange={(e) =>
+                          setLoginData({
+                            ...loginData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleShowPassword}
+                                size="small"
+                              >
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </FormControl>
                   </>
                 )}
                 {forgotPassword && (
                   <>
-                    <TextField
-                      id="email"
-                      placeholder="Enter your email"
-                      name="username"
-                      size="small"
-                      label="Email"
-                      FormHelperTextProps={{
-                        className: classes.helperTextError,
-                      }}
-                      fullWidth
-                      type="text"
-                      helperText={
-                        touched && validateField("username", loginData.username)
-                      }
-                      value={loginData.username}
-                      onChange={(e) =>
-                        setLoginData({
-                          ...loginData,
-                          [e.target.name]: e.target.value,
-                        })
-                      }
-                    />
+                    <FormControl className={classes.formControl} fullWidth>
+                      <TextField
+                        id="email"
+                        placeholder="Enter your email"
+                        name="username"
+                        size="small"
+                        label="Email"
+                        FormHelperTextProps={{
+                          className: classes.helperTextError,
+                        }}
+                        fullWidth
+                        type="text"
+                        helperText={
+                          touched &&
+                          validateField("username", loginData.username)
+                        }
+                        value={loginData.username}
+                        onChange={(e) =>
+                          setLoginData({
+                            ...loginData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                      />
+                    </FormControl>
                   </>
                 )}
                 <Button
