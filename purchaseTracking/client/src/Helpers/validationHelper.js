@@ -23,7 +23,7 @@ export const formatListItem = (list, item) => {
     for (var key of Object.keys(list[list.length - 1])) {
       if (key === item) {
         let text = list[list.length - 1][key];
-        let formatedText = text.substring(0, 16);
+        let formatedText = text.substring(0, 18);
         return `${formatedText}...`;
       }
     }

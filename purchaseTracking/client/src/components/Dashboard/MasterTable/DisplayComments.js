@@ -13,13 +13,15 @@ export default function DisplayComments(props) {
   const detail = reqList[0].details.filter(
     (item) => item._id === props.contentDetail.detailsId
   );
-  const commentsList =
+  let commentsList =
     props.decision === "comments" ? detail[0].comments : detail[0].reply;
+  const sortedCommentList = commentsList.reverse();
+
 
   return (
     <>
       <Grid container>
-        {commentsList.map((comment) => {
+        {sortedCommentList.map((comment) => {
           return (
             <Grid item md={12} key={comment._id}>
               <Typography color="secondary">

@@ -66,7 +66,12 @@ const MasterTable = (props) => {
       width: 110,
       valueFormatter: (params) => moment(params.value).format("MM/DD/YYYY"),
     },
-    { field: "crRep", headerName: "CR Rep.", width: 120 },
+    {
+      field: "crRep",
+      headerName: "CR Rep.",
+      width: 120,
+      renderCell: (params) => <DisplayTooltip params={params} />,
+    },
     { field: "enqRefNo", headerName: "Enq Ref No.", width: 160 },
     {
       field: "type",
@@ -78,7 +83,7 @@ const MasterTable = (props) => {
     {
       field: "status",
       headerName: "Status",
-      width: 200,
+      width: 175,
       renderCell: (params) => (
         <>
           {params.value}
@@ -268,11 +273,11 @@ const MasterTable = (props) => {
             <RenderCellItem
               updateField={updateField}
               icon={
-                  <DisplayTooltip
-                    text="Add vendor number"
-                    icon={<Add style={{ fontSize: "1rem" }} />}
-                  ></DisplayTooltip>
-                }
+                <DisplayTooltip
+                  text="Add vendor number"
+                  icon={<Add style={{ fontSize: "1rem" }} />}
+                ></DisplayTooltip>
+              }
               params={params}
               id="update"
               right="0"
