@@ -186,7 +186,7 @@ const ChangePassword = (props) => {
                   )}
 
                   <TextField
-                    id="password"
+                    id="newPassword"
                     placeholder="Enter your password"
                     name="newPassword"
                     size="small"
@@ -226,7 +226,7 @@ const ChangePassword = (props) => {
                     }}
                   />
                     <TextField
-                      id="password"
+                      id="confirmPassword"
                       placeholder="Enter your password"
                       name="confirmPassword"
                       size="small"

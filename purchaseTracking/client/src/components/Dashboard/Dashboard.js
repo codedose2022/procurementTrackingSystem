@@ -7,7 +7,7 @@ import { getAllServiceRequests } from "../../Actions/serviceRequestActions";
 import Alert from "@material-ui/lab/Alert";
 import MasterTable from "./MasterTable/MasterTable";
 import { isTokenValid } from "../../api/index";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { getUsers } from "../../Actions/adminActions";
 
@@ -27,6 +27,9 @@ const Dashboard = (props) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [serviceErrors, setServiceErrors] = useState("");
+  const location = useLocation();
+  const successSnackbar = location.state && location.state.showSnackbar;
+
   useEffect(() => {
     const loadDashboard = async () => {
       try {
@@ -71,7 +74,7 @@ const Dashboard = (props) => {
             <Grid container style={{ paddingTop: "80px" }}>
               <ButtonsPanel user={props.user} />
             </Grid>
-            <MasterTable user={props.user} />
+            <MasterTable user={props.user} successSnackbar = {successSnackbar} />
           </>
         )}
       </ThemeProvider>

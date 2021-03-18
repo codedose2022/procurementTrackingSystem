@@ -62,7 +62,7 @@ export const changePassword = (
     const { data } = await api.changePassword(changePasswordData, token);
     const status = _.get(data, "status", "");
     if (status === responseStatusConstants.SUCCESS) {
-      history.push("/dashboard");
+      history.push({pathname:"/dashboard",state: {showSnackbar: true}})
     } else {
       callback(_.get(data, "message", ""));
     }

@@ -22,6 +22,10 @@ const MasterTable = (props) => {
   const [contentDetail, setContentDetail] = useState({});
   const classes = useStyles();
   const [snackbar, showSnackbar] = useState(false);
+  const [successSnackbar, showSuccessSnackbar] = useState(
+    props.successSnackbar ? true : false
+  );
+
   const updateField = (
     serviceRequestId,
     detailsId,
@@ -69,7 +73,7 @@ const MasterTable = (props) => {
       width: 170,
       renderCell: (params) => (
         <>
-          <Tooltip title={params.value} aria-label="display tooltip">
+          <Tooltip title={params.value} aria-label='display tooltip'>
             <span>{params.value}</span>
           </Tooltip>
         </>
@@ -88,8 +92,8 @@ const MasterTable = (props) => {
               updateField={updateField}
               icon={<Create style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
         </>
@@ -108,8 +112,8 @@ const MasterTable = (props) => {
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
 
@@ -117,8 +121,8 @@ const MasterTable = (props) => {
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
-            id="view"
-            right="1.5rem"
+            id='view'
+            right='1.5rem'
           />
         </>
       ),
@@ -136,8 +140,8 @@ const MasterTable = (props) => {
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
 
@@ -145,8 +149,8 @@ const MasterTable = (props) => {
             updateField={updateField}
             icon={<Description style={{ fontSize: "1rem" }} />}
             params={params}
-            id="view"
-            right="1.5rem"
+            id='view'
+            right='1.5rem'
           />
         </>
       ),
@@ -159,25 +163,26 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-         
-            { props.user.userInfo.department === 'Admin' &&  (
+
+          {props.user.userInfo.department === "Admin" && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
-          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
-            <RenderCellItem
-              updateField={updateField}
-              icon={<Add style={{ fontSize: "1rem" }} />}
-              params={params}
-              id="update"
-              right="0"
-            />
-          )}
+          {props.user.userInfo.department === "Procurement" &&
+            params.value === "" && (
+              <RenderCellItem
+                updateField={updateField}
+                icon={<Add style={{ fontSize: "1rem" }} />}
+                params={params}
+                id='update'
+                right='0'
+              />
+            )}
         </>
       ),
       cellClassName: "cellWithBtn",
@@ -189,24 +194,25 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-          { props.user.userInfo.department === 'Admin' &&  (
+          {props.user.userInfo.department === "Admin" && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
-          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
-            <RenderCellItem
-              updateField={updateField}
-              icon={<Add style={{ fontSize: "1rem" }} />}
-              params={params}
-              id="update"
-              right="0"
-            />
-          )}
+          {props.user.userInfo.department === "Procurement" &&
+            params.value === "" && (
+              <RenderCellItem
+                updateField={updateField}
+                icon={<Add style={{ fontSize: "1rem" }} />}
+                params={params}
+                id='update'
+                right='0'
+              />
+            )}
         </>
       ),
       cellClassName: "cellWithBtn",
@@ -218,31 +224,32 @@ const MasterTable = (props) => {
       renderCell: (params) => (
         <>
           {params.value}
-          { props.user.userInfo.department === 'Admin' &&  (
+          {props.user.userInfo.department === "Admin" && (
             <RenderCellItem
               updateField={updateField}
               icon={<Add style={{ fontSize: "1rem" }} />}
               params={params}
-              id="update"
-              right="0"
+              id='update'
+              right='0'
             />
           )}
-          { props.user.userInfo.department === 'Procurement'&& params.value ==='' && (
-            <RenderCellItem
-              updateField={updateField}
-              icon={<Add style={{ fontSize: "1rem" }} />}
-              params={params}
-              id="update"
-              right="0"
-            />
-          )}
+          {props.user.userInfo.department === "Procurement" &&
+            params.value === "" && (
+              <RenderCellItem
+                updateField={updateField}
+                icon={<Add style={{ fontSize: "1rem" }} />}
+                params={params}
+                id='update'
+                right='0'
+              />
+            )}
         </>
       ),
       cellClassName: "cellWithBtn",
     },
   ];
   function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
   }
 
   let tableData = [];
@@ -281,20 +288,21 @@ const MasterTable = (props) => {
       return;
     }
     showSnackbar(false);
+    showSuccessSnackbar(false);
   };
   return (
     <div
       style={{ height: 725, width: "100%", marginTop: "1rem" }}
       className={classes.root}
     >
-      {snackbar && (
+      {(snackbar || successSnackbar) && (
         <Snackbar
-          open={snackbar}
+          open={true}
           onClose={handleCloseSnackbar}
           autoHideDuration={6000}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
-          <Alert severity="success">Updated successfully</Alert>
+          <Alert severity='success'>Updated successfully</Alert>
         </Snackbar>
       )}
       <DataGrid
@@ -303,7 +311,7 @@ const MasterTable = (props) => {
         components={{
           Toolbar: GridToolbar,
         }}
-        density="compact"
+        density='compact'
         disableSelectionOnClick
       />
       {editModal && (
