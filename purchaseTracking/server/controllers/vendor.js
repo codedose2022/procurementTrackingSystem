@@ -4,7 +4,7 @@ import initRegistrations from "../models/vendorReg/initRegistrationSchema.js";
 import responseMessageConstants from "../constants/responseMessage.js";
 import responseStatusConstants from "../constants/responseStatusCode.js";
 import _ from "lodash";
-import { getAllStatus,checkIfEmpty } from "../helper/util.js";
+import { getAllStatus, checkIfEmpty } from "../helper/util.js";
 
 //procurement
 export const addComments = async (req, res) => {
@@ -112,38 +112,6 @@ export const addComments = async (req, res) => {
   }
 };
 
-/*export const approveSection = async (req, res) => {
-//   req format 
-//   {
-//     "vendorId": "605aced40e24a239548ade4a",
-//     "sectionName": "companyInfo"
-// } 
-  let responseData = {};
-  try {
-    const sectionName = req.body.sectionName;
-    const key = `${sectionName}.status`;
-    //changing status to approved for particular section
-    const updates = {
-      [key]: "approved",
-    };
-    await vendorRegistrations.updateOne(
-      {
-        _id: req.body.vendorId,
-      },
-      {
-        $set: updates,
-      }
-    );
-    responseData.message = responseMessageConstants.APPROVED;
-    responseData.status = responseStatusConstants.SUCCESS;
-    return res.status(200).json(responseData);
-  } catch (error) {
-    responseData.status = responseStatusConstants.FAILURE;
-    responseData.message = responseMessageConstants.INVALID_ID;
-    return res.status(404).json(responseData);
-  }
-}; */
-
 export const setStatusOnNext = async (req, res) => {
   /* req format 
   {
@@ -161,7 +129,7 @@ export const setStatusOnNext = async (req, res) => {
         _id: req.body.vendorId,
       })
       .then((vendorRegistrationsList) => {
-        if (!checkIfEmpty(vendorRegistrationsList[sectionName],sectionName)) {
+        if (!checkIfEmpty(vendorRegistrationsList[sectionName], sectionName)) {
           flag = true;
         }
       });
@@ -209,7 +177,6 @@ export const finish = async (req, res) => {
         _id: req.body.vendorId,
       })
       .then((vendorRegistrationsList) => {
-        
         if (!_.isEmpty(vendorRegistrationsList.otherInfo.comments)) {
           updates = {
             "otherInfo.status": "incomplete",
@@ -237,7 +204,7 @@ export const finish = async (req, res) => {
     return res.status(200).json(responseData);
   } catch (error) {
     responseData.status = responseStatusConstants.FAILURE;
-    responseData.message = responseMessageConstants.INVALID_ID;
+    responseData.message = error.message;
     return res.status(404).json(error.message);
   }
 };
@@ -256,7 +223,7 @@ export const getAllRegistration = async (req, res) => {
     return res.status(200).json(responseData);
   } catch (error) {
     responseData.status = responseStatusConstants.FAILURE;
-    responseData.message = responseMessageConstants.INVALID_ID;
+    responseData.message = error.message;
     return res.status(404).json(responseData);
   }
 };
