@@ -62,3 +62,7 @@ export const checkIfEmpty = (vendorRegistrationsList, sectionName) => {
 
   return flag;
 };
+
+export const createUsername = () =>{
+  return Math. random(). toString(36). substr(2, 9);
+}

@@ -7,6 +7,7 @@ import auth from "./routes/authentication.js";
 import serviceRequests from "./routes/serviceRequests.js";
 import adminActions from "./routes/admin.js";
 import vendor from "./routes/vendor.js";
+import vendorRegister from "./routes/vendorRegister.js";
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ app.use("/auth", auth);
 app.use("/serviceRequests", serviceRequests);
 app.use("/adminActions", adminActions);
 app.use('/vendor',vendor);
+app.use('/vendorRegister',vendorRegister);
+
 
 const PORT = process.env.PORT || 5000;
 mongoose

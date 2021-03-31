@@ -37,7 +37,7 @@ export const login = async (req, res) => {
     return res.status(200).json(responseData);
   } catch (error) {
     responseData.message = error.message;
-    return res.status(404).json(responseData);
+    return res.status(404).json(responseData);  
   }
 };
 

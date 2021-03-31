@@ -4,6 +4,7 @@ import {
   finish,
   setStatusOnNext,
   getAllRegistration,
+  getNewVendorReg,
 } from "../controllers/vendor.js";
 
 const router = express.Router();
@@ -13,5 +14,6 @@ router.post("/finish", finish);
 router.post("/setStatusOnNext", setStatusOnNext);
 
 router.post("/getAllRegistration", getAllRegistration);
+router.post("/getNewVendorReg", getNewVendorReg);
 
 export default router;

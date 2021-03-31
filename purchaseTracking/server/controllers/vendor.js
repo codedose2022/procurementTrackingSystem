@@ -227,3 +227,19 @@ export const getAllRegistration = async (req, res) => {
     return res.status(404).json(responseData);
   }
 };
+
+export const getNewVendorReg = async (req, res) => {
+  let responseData = {};
+  try {
+    const vendorRegistrationsList = await vendorRegistrations.find({
+      $or: [{ status: "under review" }, { status: "submitted" }],
+    });
+    responseData.initRegistrationList = vendorRegistrationsList;
+    responseData.status = responseStatusConstants.SUCCESS;
+    return res.status(200).json(responseData);
+  } catch (error) {
+    responseData.status = responseStatusConstants.FAILURE;
+    responseData.message = error.message;
+    return res.status(404).json(responseData);
+  }
+};
